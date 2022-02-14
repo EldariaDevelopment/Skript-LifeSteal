@@ -14,8 +14,10 @@ Variables:
 	{Spectator. % player %} = 0
 	#Toggling LifeSteal serverwide
 	{Lifesteal} = 0
-    {ServerNamePrefix} = NightmareSmp
-
+    {ServerNamePrefix} = *Put here*
+# #######################################################################################################
+#                              Main Program                                                             #
+# #######################################################################################################
 
 #When you join the loops and other script data under trigger once a player joins, this only happens if the plugin is turned on. This only works if most of the code is not broken.
 #Code triggers on join
@@ -96,7 +98,10 @@ on death:
 					make console execute command "gamemode spectator %victim%"
 			#Removes the victim's attacker when they die
 			delete {currentattacker.%victim%}
-
+			
+# #######################################################################################################
+#                                  Commands                                                             #
+# #######################################################################################################
 
 #Gives sender of the command a Heart
 command /HeartTest:	
