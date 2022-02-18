@@ -25,7 +25,7 @@ Variables:
 
 command /TestingGui [<text>]:
 	trigger:
-		if player has permission "LifeSteal.Testing.*":
+		if player has permission "Lifesteal.Admin.*":
 			if args 1 is not set:
 				open chest with 1 rows named "&0[ Testing Gui ]" to player
 				format slot 0 of player with {Item.Heart} named "&cHeart" with lore "&7> Click to get a heart." to run [make player execute command "/TestingGui Heart"]
@@ -91,7 +91,7 @@ command /TestingGui [<text>]:
 				set {Resurrection} to "Enabled"
 			if args 1 is "Revive":
 				if {Resurrection} is "Disabled":
-					send "&7[ &4ERROR &7] &cResurrection is not enabled. (Testing)" to player
+					send "&7[ &4Exception Occurred &7] &cResurrection is not enabled. (Testing)" to player
 				if {Resurrection} is "Enabled":
 					send "&7[ %{ServerName}% &7] You were revived. (Testing)" to player
 					if {GhostMode} is "Spectator":
@@ -105,7 +105,9 @@ command /TestingGui [<text>]:
 						set player's flight mode to false
 						set {Status.%player%} to "Alive"
 					if {GhostMode} is "Alive":
-						send "&7[ &4ERROR &7] &cYou are not dead. (Testing)" to player
+						send "&7[ &4Exception Occurred &7] &cYou are not dead. (Testing)" to player
+		if player does not have permission "Lifesteal.Admin.*":
+			send "&7[ %{ServerName}% &7] You do not have permissions for that command. (Lifesteal)" to player
 
 
 #--------------------------------------------------------------------
@@ -156,8 +158,9 @@ command /setitemstack <text>:
 #--------------------------------------------------------------------
 
 command /Lifesteal [<text>]:	
+	aliases: ls
 	trigger:
-		if player has permission "Lifesteal.Edit.*":
+		if player has permission "Lifesteal.Admin.*":
 			if args 1 is not set:			
 				open chest with 2 rows named "&0[ Lifesteal Settings ]" to player
 				if {Lifesteal} is "Disabled":
@@ -200,7 +203,7 @@ command /Lifesteal [<text>]:
 				set {Lifesteal} to "Disabled"
 			if args 1 is "Decrease":
 				if {Lifesteal.Hearts} is less than 1:
-					send "&7[ &4ERROR &7] &cLifesteal cannot be less than 0.5 Hearts. (Lifesteal)" to player
+					send "&7[ &4Exception Occurred &7] &cLifesteal cannot be less than 0.5 Hearts. (Lifesteal)" to player
 				if {Lifesteal.Hearts} is greater than or equal to 1:
 					subtract 0.5 from {Lifesteal.Hearts}
 					format slot 3 of player with {Item.Heart} named "&7Hearts stolen on player kill." with lore "&7> %{Lifesteal.Hearts}%" to be unstealable
@@ -235,7 +238,7 @@ command /Lifesteal [<text>]:
 				set {Resurrection} to "Enabled"
 			if args 1 is "DecreaseCombatTimer":
 				if {CombatTimer} is less than or equal to 0:
-					send "&7[ &4ERROR &7] &cCombat Timer cannot be less than 0 Seconds. (Lifesteal)" to player
+					send "&7[ &4Exception Occurred &7] &cCombat Timer cannot be less than 0 Seconds. (Lifesteal)" to player
 				if {CombatTimer} is greater than or equal to 1:
 					subtract 1 from {CombatTimer}
 					format slot 13 of player with a clock named "&7Combat Timer: &f%{CombatTimer}% &fSeconds&7." with lore "&7> This effects the length of time that", "&7A player must go after being hit by", "&7A player before being safe to logout." to be unstealable
@@ -252,8 +255,8 @@ command /Lifesteal [<text>]:
 			if args 1 is "Test":
 				close the player's inventory
 				send "&7[ %{ServerName}% &7] You Don't have permissions for that. (Lifesteal)" to player
-		else:
-			send "&7[ %{ServerName}% &7] You Don't have permissions for that. (Lifesteal)" to player
+		if player does not have permission "Lifesteal.Admin.*":
+			send "&7[ %{ServerName}% &7] You do not have permissions for that command. (Lifesteal)" to player
 
 
 on damage:
@@ -337,7 +340,7 @@ command /revive <player>:
 						send "&7[ %{ServerName}% &7] You revived &f%target%&7! (Lifesteal)" to player
 						send "&7[ %{ServerName}% &7] You were revived by &f%player%&7! (Lifesteal)" to target
 					if player's max health is less than or equal to 1.5:
-						send " &7[ &4ERROR &7] &cYou do not have enough hearts to do this. (Lifesteal)" to player
+						send " &7[ &4Exception Occurred &7] &cYou do not have enough hearts to do this. (Lifesteal)" to player
 				if {Status.%target%} is "GhostFlightInvisibilty":
 					if player's max health is greater than or equal to 1.5:
 						set {Status.%target%} to "Alive"
@@ -352,19 +355,19 @@ command /revive <player>:
 						remove invisibility from player
 						stop
 					if player's max health is less than or equal to 1.5:
-						send " &7[ &4ERROR &7] &cYou do not have enough hearts to do this. (Lifesteal)" to player
+						send " &7[ &4Exception Occurred &7] &cYou do not have enough hearts to do this. (Lifesteal)" to player
 				if {Status.%target%} is "Alive":
-					send "&7[ &4ERROR &7] &cThat player is still alive. (Lifesteal)" to player			
+					send "&7[ &4Exception Occurred &7] &cThat player is still alive. (Lifesteal)" to player			
 			if {Resurrection} is "Disabled":
-				send "&7[ &4Error &7] &cResurrection is not enabled. (Lifesteal)" to player
+				send "&7[ &4Exception Occurred &7] &cResurrection is not enabled. (Lifesteal)" to player
 		if {Lifesteal} is "Disabled":
-			send "&7[ &4ERROR &7] &cLifesteal is disabled. (Lifesteal)" to player			
+			send "&7[ &4Exception Occurred &7] &cLifesteal is disabled. (Lifesteal)" to player			
 command /withdraw <number>:
 	trigger:
 		if {Lifesteal} is "Enabled":
 			if player's max health is greater than or equal to args 1 + 0.5:
 				if player doesn't have space for 64 barriers:
-					send "&7[ &4Error &7] &cNot enough space in your inventory. (Lifesteal)" to player
+					send "&7[ &4Exception Occurred &7] &cNot enough space in your inventory. (Lifesteal)" to player
 					stop
 				if player has space for 64 barriers:
 					send "&7[ %{ServerName}% &7] Withdraw %arg 1% &7Hearts. (Lifesteal)" to player
@@ -372,9 +375,9 @@ command /withdraw <number>:
 						subtract 1 from player's max health
 						give {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 1." to player
 			if player's max health is less than args 1 + 0.5:
-				send "&7[ &4ERROR &7] &cYou don't have sufficient health. (Lifesteal)" to player
+				send "&7[ &4Exception Occurred &7] &cYou don't have sufficient health. (Lifesteal)" to player
 		if {Lifesteal} is "Disabled":
-			send "&7[ &4ERROR &7] &cLifesteal is disabled. (Lifesteal)" to player			
+			send "&7[ &4Exception Occurred &7] &cLifesteal is disabled. (Lifesteal)" to player			
  
 on right click:
 	if {Lifesteal} is "Enabled":
@@ -384,9 +387,9 @@ on right click:
 				remove 1 from item amount of player's tool
 				add 1 to player's max health
 			if {Status.%player%} is not "Alive":
-				send "&47[ &4Error &7] You are dead." to player
+				send "&47[ &4Exception Occurred &7] You are dead." to player
 	if {Lifesteal} is "Disabled":
-		send "&7[ &4ERROR &7] &cLifesteal is disabled. (Lifesteal)" to player			
+		send "&7[ &4Exception Occurred &7] &cLifesteal is disabled. (Lifesteal)" to player			
 
 on place:
 	if {Item.Heart::*} contains player's held item:
@@ -399,7 +402,7 @@ command /hearts:
 		if {Lifesteal} is "Enabled":
 			send "&7[ %{ServerName}% &7] You have &c%player's max health% &7Hearts." to player
 		if {Lifesteal} is "Disabled":
-			send "&7[ &4ERROR &7] &cLifesteal is disabled. (Lifesteal)" to player			
+			send "&7[ &4Exception Occurred &7] &cLifesteal is disabled. (Lifesteal)" to player			
 
 on respawn:
 	if {Status.%player%} is "GhostFlightInvisiblity":
