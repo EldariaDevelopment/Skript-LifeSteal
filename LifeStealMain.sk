@@ -24,6 +24,7 @@ Variables:
 	
 
 command /TestingGui [<text>]:
+	aliases: TestGui
 	trigger:
 		if player has permission "Lifesteal.Admin.*":
 			if args 1 is not set:
