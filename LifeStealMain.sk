@@ -16,7 +16,7 @@ Variables:
 	{CombatTimer} = 5
 	{CombatTimer.%player%} = 0
 	{Ghosts} = "Enabled"
-	{Resurrection} = "Disabled"
+	{Resurrection} = "Enabled"
 	{GhostMode} = "FlightInvisiblity"
 	{Status.%player%} = "Alive"
 	{Lifesteal} = "Disabled"
