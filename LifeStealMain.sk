@@ -17,7 +17,7 @@ Variables:
 	{CombatTimer.%player%} = 0
 	{Ghosts} = "Enabled"
 	{Resurrection} = "Disabled"
-	{GhostMode} = "FlightInvisiblity"
+	{GhostMode} = "FlightInvisiblity"a
 	{Status.%player%} = "Alive"
 	{Lifesteal} = "Disabled"
 	{Lifesteal.Hearts} = 1
@@ -454,7 +454,8 @@ on right click:
 			if {Status.%player%} is not "Alive":
 				send "&47[ &4Exception Occurred &7] You are dead." to player
 	if {Lifesteal} is "Disabled":
-		send "&7[ &4Exception Occurred &7] &cLifesteal is disabled. (Lifesteal)" to player			
+		if {Item.Heart::*} contains player's held item:
+			send "&7[ &4Exception Occurred &7] &cLifesteal is disabled. (Lifesteal)" to player			
 
 on place:
 	if {Item.Heart::*} contains player's held item:
