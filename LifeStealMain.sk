@@ -17,14 +17,25 @@ Variables:
 	{CombatTimer.%player%} = 0
 	{Ghosts} = "Enabled"
 	{Resurrection} = "Disabled"
-	{GhostMode} = "FlightInvisiblity"a
+	{GhostMode} = "FlightInvisiblity"
 	{Status.%player%} = "Alive"
 	{Lifesteal} = "Disabled"
 	{Lifesteal.Hearts} = 1
 	{MaxHearts} = "Disabled"
 	{Lifesteal.MaxHearts} = 10
 	
-
+command /dctimer [<number>]:
+	trigger:
+		if player has permission "Admin":
+			set {_n} to args 1
+			loop {_n} times:
+				send title "&4%{_n}%" with subtitle "&cServer Restarting In:" to all players
+				wait 1 second
+				subtract 1 from {_n}
+				if {_n} is 0:
+					loop all players:
+						if player doesn't have permission "admin":
+							kick loop-players
 command /TestingGui [<text>]:
 	aliases: TestGui, gui, tg
 	trigger:
@@ -51,7 +62,7 @@ command /TestingGui [<text>]:
 				format slot 8 of player with a black glass pane named " " to be unstealable
 			if args 1 is "Heart":
 				send "&7[ %{ServerName}% &7] Gave &cHeart &7to player. (Testing)" to player
-				give {Item.Heart} named "&cHeart" to player
+				give {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." to player
 			if args 1 is "GhostsOff":
 				format slot 2 of player with a skeleton skull named "&7Ghosts: Currently &cDisabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable." to run [make player execute command "/Lifesteal GhostsOn"]
 				send "&7[ %{ServerName}% &7] Ghosts &cDisabled&7. (Testing)" to player
@@ -294,13 +305,26 @@ command /Lifesteal [<text>]:
 					send "&7[ &4Exception Occurred &7] &cHeart Cap cannot be less than 0.5 Hearts. (Lifesteal)" to player
 				if {Lifesteal.MaxHearts} is greater than or equal to 1:
 					subtract 0.5 from {Lifesteal.MaxHearts}
-					format slot 23 of player with a light blue shulker box named "&7Hearts stolen on player kill." with lore "&7> %{Lifesteal.Hearts}%" to be unstealable
+					format slot 23 of player with a light blue shulker box named "&7Hearts stolen on player kill." with lore "&7> %{Lifesteal.MaxHearts}%" to be unstealable
 					send "&7[ %{ServerName}% &7] Heart Cap set to %{LifeSteal.MaxHearts}% &7Hearts. (Lifesteal)" to player
+					loop all players:
+						if {Lifesteal.MaxHearts} is less than loop-player's max health:
+							send "&7[ %{ServerName}% &7] Your health was reduced to the heart cap. (%{Lifesteal.MaxHearts}%&7)" to loop-player
+							set {_n} to loop-player's max health - {Lifesteal.MaxHearts}
+							subtract {_n} from loop-player's max health
+							loop {_n} * 2 times:
+								give {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." to loop-player
 			if args 1 is "IncreaseMaxHearts":
 				add 0.5 to {Lifesteal.MaxHearts}
 				format slot 23 of player with a light blue shulker box named "&7Hearts Cap:" with lore "&7> %{Lifesteal.MaxHearts}%" to be unstealable
 				send "&7[ %{ServerName}% &7] Heart Cap set to %{LifeSteal.MaxHearts}% &7Hearts. (Lifesteal)" to player
-
+				loop all players:
+					if {Lifesteal.MaxHearts} is less than loop-player's max health:
+						send "&7[ %{ServerName}% &7] Your health was reduced to the heart cap. (%{Lifesteal.MaxHearts}%&7)" to loop-player
+						set {_n} to loop-player's max health - {Lifesteal.MaxHearts}
+						subtract {_n} from loop-player's max health
+						loop {_n} * 2 times:
+							give {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." to loop-player
 		if player does not have permission "Lifesteal.Admin.*":
 			send "&7[ %{ServerName}% &7] You do not have permissions for that command. (Lifesteal)" to player
 
@@ -323,8 +347,6 @@ on join:
 				apply invisibility 1 without particles to player for 1 hour
 			if {CombatTimer.%player%} is greater than 0:
 				subtract 1 from {CombatTimer.%player%}
-			if {CombatTimer.%player%} is between 1 and 5:
-				send action bar "&7Combat Timer: &c%{CombatTimer.%player%}%&7s" to player
 			if {CombatTimer.%player%} is 0:
 				delete {RecentAttacker.%player%}
 		if player is offline:
@@ -352,6 +374,10 @@ on death:
 							add victim's max health to attacker's max health
 						if {MaxHearts} is "Enabled":
 							if victim's max health + attacker's max health is greater than or equal to {Lifesteal.MaxHearts}:
+								set {_n} to {Lifesteal.MaxHearts} - attacker's max health
+								set {_n} to victim's max health - {_n} 
+								loop {_n} * 2 times:
+									drop {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." at victim's location
 								set attacker's max health to {Lifesteal.MaxHearts}
 							if victim's max health + attacker's max health is less than {Lifesteal.MaxHearts}:
 								add victim's max health to attacker's max health
@@ -369,7 +395,13 @@ on death:
 							add victim's max health - 0.5 to attacker's max health
 						if {MaxHearts} is "Enabled":
 							if victim's max health + attacker's max health is greater than or equal to {Lifesteal.MaxHearts}:
+								set {_n} to {Lifesteal.MaxHearts} - attacker's max health
+								set {_n} to victim's max health - {_n} 
+								loop {_n} * 2 times:
+									drop {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." at victim's location
 								set attacker's max health to {Lifesteal.MaxHearts}
+							if victim's max health + attacker's max health is less than {Lifesteal.MaxHearts}:
+								add victim's max health - 0.5 to attacker's max health
 						set victim's max health to 0.5
 				if victim's max health - {Lifesteal.Hearts} is greater than or equal to 0.5:				
 					subtract {LifeSteal.Hearts} from victim's max health	
@@ -377,9 +409,13 @@ on death:
 						add {LifeSteal.Hearts} to attacker's max health
 					if {MaxHearts} is "Enabled":
 						if {Lifesteal.Hearts} + attacker's max health is greater than or equal to {Lifesteal.MaxHearts}:
+							set {_n} to {Lifesteal.MaxHearts} - attacker's max health
+							set {_n} to {Lifesteal.Hearts} - {_n} 
+							loop {_n} * 2 times:
+								drop {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." at victim's location
 							set attacker's max health to {Lifesteal.MaxHearts}
 						if {Lifesteal.Hearts} + attacker's max health is less than {Lifesteal.MaxHearts}:
-							add {Lifesteal.MaxHearts} to attacker's max health
+							add {Lifesteal.Hearts} to attacker's max health
 
 
 on join:
@@ -391,6 +427,12 @@ on join:
 		set player's gamemode to adventure
 		apply invisibility 1 without particles to player for 1 hour
 		set player's flight mode to true
+	if {Lifesteal.MaxHearts} is less than player's max health:
+		send "&7[ %{ServerName}% &7] Your health was reduced to the heart cap. (%{Lifesteal.MaxHearts}%&7)" to player
+		set {_n} to player's max health - {Lifesteal.MaxHearts}
+		subtract {_n} from player's max health
+		loop {_n} * 2 times:
+			give {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." to player
 
 command /revive <player>:
 	trigger:
@@ -436,9 +478,9 @@ command /withdraw <number>:
 					stop
 				if player has space for 64 barriers:
 					send "&7[ %{ServerName}% &7] Withdraw %arg 1% &7Hearts. (Lifesteal)" to player
-					loop arg 1 times:
-						subtract 1 from player's max health
-						give {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 1." to player
+					loop arg 1 * 2 times:
+						subtract 0.5 from player's max health
+						give {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." to player
 			if player's max health is less than args 1 + 0.5:
 				send "&7[ &4Exception Occurred &7] &cYou don't have sufficient health. (Lifesteal)" to player
 		if {Lifesteal} is "Disabled":
@@ -448,14 +490,21 @@ on right click:
 	if {Lifesteal} is "Enabled":
 		if {Item.Heart::*} contains player's held item:
 			if {Status.%player%} is "Alive":
-				cancel event
-				remove 1 from item amount of player's tool
-				add 1 to player's max health
+				if {MaxHearts} is "Disabled":
+					cancel event
+					remove 1 from item amount of player's tool
+					add 0.5 to player's max health
+				if {MaxHearts} is "Enabled":
+					if player's max health + 0.5 is less than or equal to {LifeSteal.MaxHearts}:
+						cancel event
+						remove 1 from item amount of player's tool
+						add 0.5 to player's max health
+					if player's max health + 0.5 is greater than {LifeSteal.MaxHearts}:
+						send "&7[ &4Exception Occurred &7] You are at the heart cap." to player
 			if {Status.%player%} is not "Alive":
-				send "&47[ &4Exception Occurred &7] You are dead." to player
+				send "&7[ &4Exception Occurred &7] You are dead." to player
 	if {Lifesteal} is "Disabled":
-		if {Item.Heart::*} contains player's held item:
-			send "&7[ &4Exception Occurred &7] &cLifesteal is disabled. (Lifesteal)" to player			
+		send "&7[ &4Exception Occurred &7] &cLifesteal is disabled. (Lifesteal)" to player			
 
 on place:
 	if {Item.Heart::*} contains player's held item:
@@ -463,10 +512,13 @@ on place:
 	if {Item.Heart::*} contains player's off hand item:
 		cancel event
 
-command /hearts:
+command /hearts [<player>]:
 	trigger:
 		if {Lifesteal} is "Enabled":
-			send "&7[ %{ServerName}% &7] You have &c%player's max health% &7Hearts." to player
+			if args 1 is not set:
+				send "&7[ %{ServerName}% &7] You have &c%player's max health% &7Hearts." to player
+			if args 1 is set:
+				send "&7[ %{ServerName}% &7] %target% has &c%target's max health% &7Hearts." to player
 		if {Lifesteal} is "Disabled":
 			send "&7[ &4Exception Occurred &7] &cLifesteal is disabled. (Lifesteal)" to player			
 
