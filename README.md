@@ -6,8 +6,10 @@ If you need help setting up said plugin contact: Almondz#0001, on discord for he
 
 # Documentation
 * Original Skript Documentation: https://en.njol.ch/projects/skript
-* SkUnity Skript Documentation: https://docs.skunity.com/
 * SkriptHub Skript Documentation: https://skripthub.net/docs/
+* SkUnity Skript Documentation: https://docs.skunity.com/
+# Forums
+* SkUnity Skript Forums: https://forums.skunity.com/
 #                              What You Must Do   
 	1. Set Items to {HeartIncrease}, {HeartDecrease}, {Heart},
 		{CombatTimerIncrease}, and {CombatTimerDecrease}.
