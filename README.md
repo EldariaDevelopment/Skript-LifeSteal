@@ -3,10 +3,11 @@ This Software uses a Minecraft plugin called Skript found here: [ https://github
 It's advised to only use the main version on the program but you can use the Analyze Version to figure out of it works.
 Some features are customizable but may require Skript experience, the Analyze Version may help.
 If you need help setting up said plugin contact: Almondz#0001, on discord for help.
+
 #Documentation
-Original Skript Documentation: https://en.njol.ch/projects/skript
-SkUnity Skript Documentation: https://docs.skunity.com/
-SkriptHub Skript Documentation: https://skripthub.net/docs/
+#Original Skript Documentation: https://en.njol.ch/projects/skript
+#SkUnity Skript Documentation: https://docs.skunity.com/
+#SkriptHub Skript Documentation: https://skripthub.net/docs/
 #                              What You Must Do   
 	1. Set Items to {HeartIncrease}, {HeartDecrease}, {Heart},
 		{CombatTimerIncrease}, and {CombatTimerDecrease}.
