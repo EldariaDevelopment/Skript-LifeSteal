@@ -1,16 +1,16 @@
-# Skript-LifeSteal
+# Skript-LifeSteal #
 This Software uses a Minecraft plugin called Skript found here: [ https://github.com/SkriptLang/Skript ].
 It's advised to only use the main version on the program but you can use the Analyze Version to figure out of it works.
 Some features are customizable but may require Skript experience, the Analyze Version may help.
 If you need help setting up said plugin contact: Almondz#0001, on discord for help.
 
-# Documentation
+## Documentation ##
 * Original Skript Documentation: https://en.njol.ch/projects/skript
 * SkriptHub Skript Documentation: https://skripthub.net/docs/
 * SkUnity Skript Documentation: https://docs.skunity.com/
-# Forums
+### Forums ###
 * SkUnity Skript Forums: https://forums.skunity.com/
-#                              What You Should do First   
+####                              What You Should do First   ####
 	1. Set Items to {HeartIncrease}, {HeartDecrease}, {Heart},
 		{CombatTimerIncrease}, and {CombatTimerDecrease}.
 		> Use /setitem with the item in your hand.
