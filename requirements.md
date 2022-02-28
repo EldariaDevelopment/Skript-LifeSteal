@@ -1,0 +1,3 @@
+# equirements #
+* Skript
+* Sk
