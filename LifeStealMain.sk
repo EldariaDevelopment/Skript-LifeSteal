@@ -23,6 +23,8 @@ Variables:
 	{Lifesteal.Hearts} = 1
 	{MaxHearts} = "Disabled"
 	{Lifesteal.MaxHearts} = 10
+	{TestingThing} = "Disabled"
+	{LeavePenalty} = "Termination"
 	
 command /dctimer [<number>]:
 	trigger:
