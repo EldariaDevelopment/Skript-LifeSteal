@@ -9,6 +9,7 @@
 ## Coming Soon Commands: ##
 * >./DcTimerCancel or ./DcTimer (Cancel) [^7]
 ###
+  e
 
 [^1]: Revives player.
 [^2]: Tells how many hearts a player has.
