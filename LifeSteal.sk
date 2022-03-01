@@ -26,18 +26,27 @@ Variables:
 	{TestingThing} = "Disabled"
 	{LeavePenalty} = "Termination"
 	
-command /dctimer [<number>]:
+command /dctimer [<text>] [<number>]:
 	trigger:
 		if player has permission "Admin":
-			set {_n} to args 1
-			loop {_n} times:
-				send title "&4%{_n}%" with subtitle "&cServer Restarting In:" to all players
-				wait 1 second
-				subtract 1 from {_n}
-				if {_n} is 0:
-					loop all players:
-						if player doesn't have permission "admin":
-							kick loop-players
+			if args 1 is "Cancel":
+				set {_x} to "Cancel"
+				set {_n} to 0
+			else:
+				set {_n} to args 2
+				set {_t} to args 1
+				loop all players:
+					send "&7[ %{ServerName}% &7] Server Restart, Reason: {_t}." to loop-players
+				loop {_n} times:
+					send title "&4%{_n}%" with subtitle "&cServer Restarting In:" to all players
+					wait 1 second
+					subtract 1 from {_n}
+					if {_n} is 0:
+						if {_x} = "Cancel":
+							stop
+						loop all players:
+							if player doesn't have permission "admin":
+								kick loop-players
 command /TestingGui [<text>]:
 	permission: Lifesteal.Admin.*
 	permission message: &7[ %{ServerName}% &7] You do not have permissions for that command. (Lifesteal)
