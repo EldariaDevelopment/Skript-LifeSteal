@@ -12,13 +12,9 @@
 	X^2^
 Here's a sentence with a footnote. [^1]
 
-[^1]: Sus.
-[^2]: Sus.
-[^3]: Sus.
-[^4]: Sus.
-[^5]: Sus.
-[^6]: Sus.
-| Syntax | Description |
-| ----------- | ----------- |
-| Header | Title |
-| Paragraph | Text |
+[^1]: Revives player.
+[^2]: Tells how many hearts a player has.
+[^3]: Allows you to to set icons.
+[^4]: The main Gui.
+[^5]: The secondary Gui.
+[^6]: Kicks non op players after a set time.
