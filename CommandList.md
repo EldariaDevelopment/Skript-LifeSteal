@@ -18,4 +18,3 @@
 [^5]: The secondary Gui.
 [^6]: Kicks non op players after a set time.
 [^7]: Cancels Dc Timer.
-X<sup>2</sup>
