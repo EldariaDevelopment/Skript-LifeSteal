@@ -10,7 +10,8 @@
 * >./DcTimerCancel or ./DcTimer (Cancel) [^7]
 ### e
 	X^2^
-Here's a sentence with a footnote. [^1]
+	X^2^
+	e
 
 [^1]: Revives player.
 [^2]: Tells how many hearts a player has.
