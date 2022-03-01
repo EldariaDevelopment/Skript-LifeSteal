@@ -10,11 +10,9 @@
 * >./DcTimerCancel or ./DcTimer (Cancel)
 ### e
 	X^2^
-term
-: definition
-	Here's a sentence with a footnote. [^1]
+Here's a sentence with a footnote. [^1]
 
-[^1]: This is the footnote.
+[^1]: Sus.
 | Syntax | Description |
 | ----------- | ----------- |
 | Header | Title |
