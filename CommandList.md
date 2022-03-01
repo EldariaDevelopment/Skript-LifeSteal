@@ -18,3 +18,4 @@ Here's a sentence with a footnote. [^1]
 [^4]: The main Gui.
 [^5]: The secondary Gui.
 [^6]: Kicks non op players after a set time.
+[^7]: Cancels Dc Timer.
