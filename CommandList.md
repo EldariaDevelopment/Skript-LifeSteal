@@ -8,9 +8,7 @@
 * >./DcTimer <time> [^6]
 ## Coming Soon Commands: ##
 * >./DcTimerCancel or ./DcTimer (Cancel) [^7]
-### e
-	X^2^
-	X^2^
+###
 	e
 
 [^1]: Revives player.
