@@ -10,7 +10,7 @@ If you need help setting up said plugin contact: Almondz#0001, on discord for he
 * SkUnity Skript Documentation: https://docs.skunity.com/
 ### Forums ###
 * SkUnity Skript Forums: https://forums.skunity.com/
-####What You Should do First####
+#### What You Should do First####
 >1. Set Items to {HeartIncrease}, {HeartDecrease}, {Heart}, CombatTimerIncrease}, and {CombatTimerDecrease}. 
 >2. Use /setitem with the item in your hand.
 >3. With the a single heart item in your hand do /setitemstack and allow it time to set the multi-variable.
