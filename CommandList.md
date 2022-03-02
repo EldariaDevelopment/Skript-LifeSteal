@@ -1,4 +1,4 @@
-# Commands: {#1}
+# Commands:
 - - - -
 * >./Revive [^1]
 * >./Hearts <player> [^2]
@@ -19,5 +19,9 @@
 [^6]: Kicks non op players after a set time.
 [^7]: Cancels Dc Timer.
 
-test
-: athing
+First Term
+: This is the definition of the first term.
+
+Second Term
+: This is one definition of the second term.
+: This is another definition of the second term.
