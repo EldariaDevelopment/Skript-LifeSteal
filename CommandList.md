@@ -1,4 +1,4 @@
-# Commands: #
+# Commands: {#1}
 - - - -
 * >./Revive [^1]
 * >./Hearts <player> [^2]
