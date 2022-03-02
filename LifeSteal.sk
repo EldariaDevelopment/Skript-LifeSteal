@@ -29,8 +29,9 @@ Variables:
 command /dctimer [<text>] [<number>]:
 	trigger:
 		if player has permission "Admin":
-			if args 1 is "Cancel":
-				set {_x} to "Cancel"
+			set {x} to "NotCancel"
+			if args 1 or 2 is "Cancel":
+				set {x} to "Cancel"
 				set {_n} to 0
 			else:
 				set {_n} to args 2
@@ -38,15 +39,18 @@ command /dctimer [<text>] [<number>]:
 				loop all players:
 					send "&7[ %{ServerName}% &7] Server Restart, Reason: %{_t}%." to loop-players
 				loop {_n} times:
-					send title "&4%{_n}%" with subtitle "&cServer Restarting In:" to all players
 					wait 1 second
-					subtract 1 from {_n}
-					if {_n} is 0:
-						if {_x} = "Cancel":
-							stop
-						loop all players:
-							if player doesn't have permission "admin":
-								kick loop-players
+					if {_x} = "Cancel":
+						stop
+					else:
+						send title "&4%{_n}%" with subtitle "&cServer Restarting In:" to all players
+						subtract 1 from {_n}
+						if {_n} is 0:
+							if {x} = "Cancel":
+								stop
+							loop all players:
+								if player doesn't have permission "admin":
+									kick loop-players
 command /TestingGui [<text>]:
 	permission: Lifesteal.Admin.*
 	permission message: &7[ %{ServerName}% &7] You do not have permissions for that command. (Lifesteal)
