@@ -1,4 +1,4 @@
-# Default Settings
+# Stock Settings
 - - -
 * CombatTimer = 5
 * Ghosts = Enabled
