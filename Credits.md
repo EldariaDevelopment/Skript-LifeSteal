@@ -3,7 +3,7 @@
 * > Almond | Almondz#0001
 * >Aubrey  | Yes
 - - -
-| Syntax      | Description | Test Text     |
+| Developers      | User | Discrd      |
 | :---        |    :----:   |          ---: |
 | Header      | Title       | Here's this   |
 | Paragraph   | Text        | And more      |
