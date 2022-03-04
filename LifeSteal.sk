@@ -225,7 +225,7 @@ command /Lifesteal [<text>]:
 			format slot 16 of player with a black glass pane named " " to be unstealable
 			format slot 17 of player with a barrier named "&cReset Settings" to run [make player execute command "/Lifesteal Reset"]
 			if {MaxHearts} is "Enabled":
-			format slot 18 of player with a red shulker box named "&7Heart Cap: Currently &aEnabled&7." with lore "&7> Players stop gaining hearts,", "&7Once they reach this threshold.", "&7> Click to &cDisable." to run [make player execute command "/Lifesteal MaxHeartsOff"]
+				format slot 18 of player with a red shulker box named "&7Heart Cap: Currently &aEnabled&7." with lore "&7> Players stop gaining hearts,", "&7Once they reach this threshold.", "&7> Click to &cDisable." to run [make player execute command "/Lifesteal MaxHeartsOff"]
 			if {MaxHearts} is "Disabled":
 				format slot 18 of player with a red shulker box named "&7Heart Cap: Currently &cDisabled&7." with lore "&7> Players stop gaining hearts,", "&7Once they reach this threshold.", "&7> Click to &aEnable." to run [make player execute command "/Lifesteal MaxHeartsOn"]
 			format slot 19 of player with a black glass pane named " " to be unstealable
@@ -235,7 +235,7 @@ command /Lifesteal [<text>]:
 			format slot 23 of player with a light blue shulker box named "&7Hearts Cap:" with lore "&7> %{Lifesteal.MaxHearts}%" to be unstealable
 			format slot 24 of player with {Item.MaxHeartsIncrease} named "&7Increase Heart Cap by 0.5 Hearts." to run [make player execute command "/Lifesteal IncreaseMaxHearts"]
 			format slot 25 of player with a black glass pane named " " to be unstealable
-			format slot 26 of player with a black glass pane named " " to be unstealable
+			format slot 26 of player with a Barrier named "&cReset Player Data" to run [make player execute command "/Lifesteal ResetPlayer"]
 		if args 1 is "Enable":
 			format slot 0 of player with a lime wool named "&7Currently &aEnabled&7." with lore "&7> Click to &cDisable&7." to run [make player execute command "/Lifesteal Disable"]
 			send "&7[ %{ServerName}% &7] Lifesteal &aEnabled&7. (Lifesteal)" to player
@@ -306,6 +306,12 @@ command /Lifesteal [<text>]:
 			set {Lifesteal.Hearts} to 1
 			set {MaxHearts} to "Disabled"
 			set {Lifesteal.MaxHearts} to 10
+		if args 1 is "ResetPlayer":
+			loop all players:
+				set %loop-players's max health% to 10
+				send "&7[ %{ServerName}% &7] players have been set to 10 &cHearts." to player
+		if {Lifesteal} is "Disabled":
+			send "&7[ &4Exception Occurred &7] &cLifesteal is disabled. (Lifesteal)" to player
 		if args 1 is "MaxHeartsOff":
 			format slot 18 of player with a red shulker box named "&7Heart Cap: Currently &cDisabled&7." with lore "&7> Players stop gaining hearts,", "&7Once they reach this threshold.", "&7> Click to &aEnable." to run [make player execute command "/Lifesteal MaxHeartsOn"]
 			send "&7[ %{ServerName}% &7] Heart Cap &cDisabled&7. (Lifesteal)" to player
