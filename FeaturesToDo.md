@@ -1,4 +1,0 @@
-- [x] General LifeSteal
-- [x] Combat Timer
-- [x] Making Basic Toggleable Optios
-- [ ] Combat Timer Punishments
