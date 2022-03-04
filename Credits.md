@@ -1,4 +1,4 @@
 # Developers
-> Almond | Almondz#0001
-> Aubrey | Yes
+* Almond | Almondz#0001
+* Aubrey | Yes
 - - -
