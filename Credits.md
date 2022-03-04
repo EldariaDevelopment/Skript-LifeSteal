@@ -3,7 +3,7 @@
 * > Almond | Almondz#0001
 * >Aubrey  | Yes
 - - -
-| Developers      | User | Discrd      |
+| Developers | User | Discord |
 | :---        |    :----:   |          ---: |
-| Header      | Title       | Here's this   |
-| Paragraph   | Text        | And more      |
+| Aubrey | Cleveland_OH | Unknown |
+| Almond | AlmondDrop11 | Almondz#0001 |
