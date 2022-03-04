@@ -1,6 +1,7 @@
-# Recommended
+# Recommended Settings
+
 - - -
->
+
 * CombatTimer = 5-10
 * Ghosts = Enabled
 * Resurrection = Enabled
