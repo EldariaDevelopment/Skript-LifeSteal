@@ -8,135 +8,134 @@
 #		and allow it time to set the multi-variable.
 #	3. Edit the /Lifesteal configuration to your liking.
 #	4. If your just starting use the recommended settting
-# 5. For support message Almondz#001 on discord
+# 5. For support message Almondz#idk anymore on discord
 # 6. Use /TestingGui for more commands and testing features.
 #--------------------------------------------------------------------
 
 Variables:
-	{CombatTimer} = 5
-	{CombatTimer.%player%} = 0
-	{Ghosts} = "Enabled"
-	{Resurrection} = "Disabled"
-	{GhostMode} = "FlightInvisiblity"
-	{Status.%player%} = "Alive"
-	{Lifesteal} = "Disabled"
-	{Lifesteal.Hearts} = 1
-	{MaxHearts} = "Disabled"
-	{Lifesteal.MaxHearts} = 10
-	{TestingThing} = "Disabled"
-	{LeavePenalty} = "Termination"
-
+  {CombatTimer} = 5
+  {CombatTimer.%player%} = 0
+  {Ghosts} = "Enabled"
+  {Resurrection} = "Disabled"
+  {GhostMode} = "FlightInvisiblity"
+  {Status.%player%} = "Alive"
+  {Lifesteal} = "Disabled"
+  {Lifesteal.Hearts} = 1
+  {MaxHearts} = "Disabled"
+  {Lifesteal.MaxHearts} = 10
+  {TestingThing} = "Disabled"
+  {LeavePenalty} = "Termination"
 command /dctimer [<text>] [<text>]:
-	trigger:
-		if player has permission "Admin":
-			if args 1 is "Cancel":
-				set {CancelDCTimer} to "Cancel"
-				wait 2 seconds
-				delete {CancelDCTimer}
-			if args 1 is not "Cancel":
-				set {_Args1} to args 1 parsed as a number
-				if {_Args1} is not a number:
-					send "Invalid Format. /dctimer <number> <reason>" to player
-				if {_Args1} is a number:
-					set {_Reason} to args 2
-					send "&7[ %{ServerName}% &7] Server Restart, Reason: %{_Reason}%." to all players
-					loop {_Args1} times:
-						wait 1 second
-						if {CancelDCTimer} is "Cancel":
-							send "&7[ %{ServerName}% &7] Restart Canceled." to all players
-							stop
-						if {CancelDCTimer} is not set:
-							send title "&4%{_Args1}%" with subtitle "&cServer Restarting In:" to all players
-							subtract 1 from {_Args1}
-							if {_Args1} is 0:
-								loop all players:
-									if player doesn't have permission "admin":
-										kick loop-player
+  trigger:
+    if player has permission "Admin":
+      if args 1 is "Cancel":
+        set {CancelDCTimer} to "Cancel"
+        wait 2 seconds
+        delete {CancelDCTimer}
+      if args 1 is not "Cancel":
+        set {_Args1} to args 1 parsed as a number
+        if {_Args1} is not a number:
+          send "Invalid Format. /dctimer <number> <reason>" to player
+        if {_Args1} is a number:
+          set {_Reason} to args 2
+          send "&7[ %{ServerName}% &7] Server Restart, Reason: %{_Reason}%." to all players
+          loop {_Args1} times:
+            wait 1 second
+            if {CancelDCTimer} is "Cancel":
+              send "&7[ %{ServerName}% &7] Restart Canceled." to all players
+              stop
+            if {CancelDCTimer} is not set:
+              send title "&4%{_Args1}%" with subtitle "&cServer Restarting In:" to all players
+              subtract 1 from {_Args1}
+              if {_Args1} is 0:
+                loop all players:
+                  if player doesn't have permission "admin":
+                    kick loop-player
 command /TestingGui [<text>]:
-	permission: Lifesteal.Admin.*
-	permission message: &7[ %{ServerName}% &7] You do not have permissions for that command. (Lifesteal)
-	aliases: TestGui, gui, tg
-	trigger:
-		if args 1 is not set:
-			open chest with 1 rows named "&0[ Testing Gui ]" to player
-			format slot 0 of player with {Item.Heart} named "&cHeart" with lore "&7> Click to get a heart." to run [make player execute command "/TestingGui Heart"]
-			format slot 1 of player with a black glass pane named " " to be unstealable
-			if {Ghosts} is "Enabled":
-				format slot 2 of player with a skeleton skull named "&7Ghosts: Currently &aEnabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This &ais &7a recommended setting. ", "&7> Click to &cDisable." to run [make player execute command "/TestingGui GhostsOff"]
-			if {Ghosts} is "Disabled":
-				format slot 2 of player with a skeleton skull named "&7Ghosts: Currently &cDisabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable." to run [make player execute command "/TestingGui GhostsOn"]
-			if {GhostMode} is "Spectator":
-				format slot 3 of player with a wither skeleton skull named "&7Ghost Mode: &fSpectator&7." with lore "&7> When a player dies they will be put", "&7Into spectator gamemode.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to change to &fFlight + Invisibility&7." to run [make player execute command "/TestingGui GhostModeFlightInvisiblity"]
-			if {GhostMode} is "FlightInvisiblity":
-				format slot 3 of player with a wither skeleton skull named "&7Ghost Mode: &fFlight + Invisibility&7." with lore "&7> When a player dies they will turn", "&7Invisibile and be given flight.", "&7> This &ais &7a recommended setting. ", "&7> Click to change to &fSpectator&7." to run [make player execute command "/TestingGui GhostModeSpectator"]
-			format slot 4 of player with a bone named "&fDie" with lore "&7> You Die. If Ghosts are enabled you", "&7Will become one and your health", "&7Will be set to 0." to run [make player execute command "/TestingGui Die"]
-			format slot 5 of player with a black glass pane named " " to be unstealable
-			if {Resurrection} is "Enabled":
-				format slot 6 of player with a totem of undying named "&7Resurrection: Currently &aEnabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This &ais &7a recommended setting. ", "&7> Click to &cDisable." to run [make player execute command "/TestingGui ResurrectionOff"]
-			if {Resurrection} is "Disabled":
-				format slot 6 of player with a totem of undying named "&7Resurrection: Currently &cDisabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable." to run [make player execute command "/TestingGui ResurrectionOn"]
-			format slot 7 of player with a nether star named "&fRevive" to run [make player execute command "/TestingGui Revive"]
-			format slot 8 of player with a black glass pane named " " to be unstealable
-		if args 1 is "Heart":
-			send "&7[ %{ServerName}% &7] Gave &cHeart &7to player. (Testing)" to player
-			give {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." to player
-		if args 1 is "GhostsOff":
-			format slot 2 of player with a skeleton skull named "&7Ghosts: Currently &cDisabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable." to run [make player execute command "/Lifesteal GhostsOn"]
-			send "&7[ %{ServerName}% &7] Ghosts &cDisabled&7. (Testing)" to player
-			set {Ghosts} to "Disabled"
-		if args 1 is "GhostsOn":
-			format slot 2 of player with a skeleton skull named "&7Ghosts: Currently &aEnabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This &ais &7a recommended setting. ", "&7> Click to &cDisable." to run [make player execute command "/Lifesteal GhostsOff"]
-			send "&7[ %{ServerName}% &7] Ghosts &aEnabled&7. (Testing)" to player
-			set {Ghosts} to "Enabled"
-		if args 1 is "GhostModeFlightInvisiblity":
-			format slot 3 of player with a wither skeleton skull named "&7Ghost Mode: &fFlight + Invisibility&7." with lore "&7> When a player dies they will turn", "&7Invisibile and be given flight.", "&7> This &ais &7a recommended setting. ", "&7> Click to change to &fSpectator&7." to run [make player execute command "/TestingGui GhostModeSpectator"]
-			send "&7[ %{ServerName}% &7] Ghost mode set to &fFlight + Invisiblity&7. (Testing)" to player
-			set {GhostMode} to "FlightInvisiblity"
-		if args 1 is "GhostModeSpectator":
-			format slot 3 of player with a wither skeleton skull named "&7Ghost Mode: &fSpectator&7." with lore "&7> When a player dies they will be put", "&7Into spectator gamemode.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to change to &fFlight + Invisibility&7." to run [make player execute command "/TestingGui GhostModeFlightInvisiblity"]
-			send "&7[ %{ServerName}% &7] Ghost mode set to &fSpectator&7. (Testing)" to player
-			set {GhostMode} to "Spectator"
-		if args 1 is "Die":
-			send "&7[ %{ServerName}% &7] You were killed. (Testing)" to player
-			if {Ghosts} is "Disabled":
-				set player's max health to 0.5
-				kill the player
-			if {Ghosts} are "Enabled":
-				if {GhostMode} is "Spectator":
-					set player's max health to 0
-					set player's gamemode to spectator
-					set {Status.%player%} to "GhostSpectator"
-				if {GhostMode} is "FlightInvisiblity":
-					set player's max health to 0
-					apply invisibility 1 without particles to player for 1 hour
-					set player's gamemode to adventure
-					set player's flight mode to true
-					set {Status.%player%} to "GhostFlightInvisiblity"
-		if args 1 is "ResurrectionOff":
-			format slot 6 of player with a totem of undying named "&7Resurrection: Currently &cDisabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This &ais &7a recommended setting. ", "&7> Click to &aEnable." to run [make player execute command "/TestingGui ResurrectionOn"]
-			send "&7[ %{ServerName}% &7] Resurrection &cDisabled&7. (Testing)" to player
-			set {Resurrection} to "Disabled"
-		if args 1 is "ResurrectionOn":
-			format slot 6 of player with a totem of undying named "&7Resurrection: Currently &aEnabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &cDisable." to run [make player execute command "/TestingGui ResurrectionOff"]
-			send "&7[ %{ServerName}% &7] Resurrection &aEnabled&7. (Testing)" to player
-			set {Resurrection} to "Enabled"
-		if args 1 is "Revive":
-			if {Resurrection} is "Disabled":
-				send "&7[ &4Exception Occurred &7] &cResurrection is not enabled. (Testing)" to player
-			if {Resurrection} is "Enabled":
-				send "&7[ %{ServerName}% &7] You were revived. (Testing)" to player
-				if {GhostMode} is "Spectator":
-					set player's max health to 1
-					set player's gamemode to survival
-					set {Status.%player%} to "Alive"
-				if {GhostMode} is "FlightInvisiblity":
-					set player's max health to 1
-					remove invisibility from player
-					set player's gamemode to survival
-					set player's flight mode to false
-					set {Status.%player%} to "Alive"
-				if {GhostMode} is "Alive":
-					send "&7[ &4Exception Occurred &7] &cYou are not dead. (Testing)" to player
+  permission: Lifesteal.Admin.*
+  permission message: &7[ %{ServerName}% &7] You do not have permissions for that command. (Lifesteal)
+  aliases: TestGui, gui, tg
+  trigger:
+    if args 1 is not set:
+      open chest with 1 rows named "&0[ Testing Gui ]" to player
+      format slot 0 of player with {Item.Heart} named "&cHeart" with lore "&7> Click to get a heart." to run [make player execute command "/TestingGui Heart"]
+      format slot 1 of player with a black glass pane named " " to be unstealable
+      if {Ghosts} is "Enabled":
+        format slot 2 of player with a skeleton skull named "&7Ghosts: Currently &aEnabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This &ais &7a recommended setting. ", "&7> Click to &cDisable." to run [make player execute command "/TestingGui GhostsOff"]
+      if {Ghosts} is "Disabled":
+        format slot 2 of player with a skeleton skull named "&7Ghosts: Currently &cDisabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable." to run [make player execute command "/TestingGui GhostsOn"]
+      if {GhostMode} is "Spectator":
+        format slot 3 of player with a wither skeleton skull named "&7Ghost Mode: &fSpectator&7." with lore "&7> When a player dies they will be put", "&7Into spectator gamemode.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to change to &fFlight + Invisibility&7." to run [make player execute command "/TestingGui GhostModeFlightInvisiblity"]
+      if {GhostMode} is "FlightInvisiblity":
+        format slot 3 of player with a wither skeleton skull named "&7Ghost Mode: &fFlight + Invisibility&7." with lore "&7> When a player dies they will turn", "&7Invisibile and be given flight.", "&7> This &ais &7a recommended setting. ", "&7> Click to change to &fSpectator&7." to run [make player execute command "/TestingGui GhostModeSpectator"]
+      format slot 4 of player with a bone named "&fDie" with lore "&7> You Die. If Ghosts are enabled you", "&7Will become one and your health", "&7Will be set to 0." to run [make player execute command "/TestingGui Die"]
+      format slot 5 of player with a black glass pane named " " to be unstealable
+      if {Resurrection} is "Enabled":
+        format slot 6 of player with a totem of undying named "&7Resurrection: Currently &aEnabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This &ais &7a recommended setting. ", "&7> Click to &cDisable." to run [make player execute command "/TestingGui ResurrectionOff"]
+      if {Resurrection} is "Disabled":
+        format slot 6 of player with a totem of undying named "&7Resurrection: Currently &cDisabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable." to run [make player execute command "/TestingGui ResurrectionOn"]
+      format slot 7 of player with a nether star named "&fRevive" to run [make player execute command "/TestingGui Revive"]
+      format slot 8 of player with a black glass pane named " " to be unstealable
+    if args 1 is "Heart":
+      send "&7[ %{ServerName}% &7] Gave &cHeart &7to player. (Testing)" to player
+      give {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." to player
+    if args 1 is "GhostsOff":
+      format slot 2 of player with a skeleton skull named "&7Ghosts: Currently &cDisabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable." to run [make player execute command "/Lifesteal GhostsOn"]
+      send "&7[ %{ServerName}% &7] Ghosts &cDisabled&7. (Testing)" to player
+      set {Ghosts} to "Disabled"
+    if args 1 is "GhostsOn":
+      format slot 2 of player with a skeleton skull named "&7Ghosts: Currently &aEnabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This &ais &7a recommended setting. ", "&7> Click to &cDisable." to run [make player execute command "/Lifesteal GhostsOff"]
+      send "&7[ %{ServerName}% &7] Ghosts &aEnabled&7. (Testing)" to player
+      set {Ghosts} to "Enabled"
+    if args 1 is "GhostModeFlightInvisiblity":
+      format slot 3 of player with a wither skeleton skull named "&7Ghost Mode: &fFlight + Invisibility&7." with lore "&7> When a player dies they will turn", "&7Invisibile and be given flight.", "&7> This &ais &7a recommended setting. ", "&7> Click to change to &fSpectator&7." to run [make player execute command "/TestingGui GhostModeSpectator"]
+      send "&7[ %{ServerName}% &7] Ghost mode set to &fFlight + Invisiblity&7. (Testing)" to player
+      set {GhostMode} to "FlightInvisiblity"
+    if args 1 is "GhostModeSpectator":
+      format slot 3 of player with a wither skeleton skull named "&7Ghost Mode: &fSpectator&7." with lore "&7> When a player dies they will be put", "&7Into spectator gamemode.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to change to &fFlight + Invisibility&7." to run [make player execute command "/TestingGui GhostModeFlightInvisiblity"]
+      send "&7[ %{ServerName}% &7] Ghost mode set to &fSpectator&7. (Testing)" to player
+      set {GhostMode} to "Spectator"
+    if args 1 is "Die":
+      send "&7[ %{ServerName}% &7] You were killed. (Testing)" to player
+      if {Ghosts} is "Disabled":
+        set player's max health to 0.5
+        kill the player
+      if {Ghosts} are "Enabled":
+        if {GhostMode} is "Spectator":
+          set player's max health to 0
+          set player's gamemode to spectator
+          set {Status.%player%} to "GhostSpectator"
+        if {GhostMode} is "FlightInvisiblity":
+          set player's max health to 0
+          apply invisibility 1 without particles to player for 1 hour
+          set player's gamemode to adventure
+          set player's flight mode to true
+          set {Status.%player%} to "GhostFlightInvisiblity"
+    if args 1 is "ResurrectionOff":
+      format slot 6 of player with a totem of undying named "&7Resurrection: Currently &cDisabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This &ais &7a recommended setting. ", "&7> Click to &aEnable." to run [make player execute command "/TestingGui ResurrectionOn"]
+      send "&7[ %{ServerName}% &7] Resurrection &cDisabled&7. (Testing)" to player
+      set {Resurrection} to "Disabled"
+    if args 1 is "ResurrectionOn":
+      format slot 6 of player with a totem of undying named "&7Resurrection: Currently &aEnabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &cDisable." to run [make player execute command "/TestingGui ResurrectionOff"]
+      send "&7[ %{ServerName}% &7] Resurrection &aEnabled&7. (Testing)" to player
+      set {Resurrection} to "Enabled"
+    if args 1 is "Revive":
+      if {Resurrection} is "Disabled":
+        send "&7[ &4Exception Occurred &7] &cResurrection is not enabled. (Testing)" to player
+      if {Resurrection} is "Enabled":
+        send "&7[ %{ServerName}% &7] You were revived. (Testing)" to player
+        if {GhostMode} is "Spectator":
+          set player's max health to 1
+          set player's gamemode to survival
+          set {Status.%player%} to "Alive"
+        if {GhostMode} is "FlightInvisiblity":
+          set player's max health to 1
+          remove invisibility from player
+          set player's gamemode to survival
+          set player's flight mode to false
+          set {Status.%player%} to "Alive"
+        if {GhostMode} is "Alive":
+          send "&7[ &4Exception Occurred &7] &cYou are not dead. (Testing)" to player
 
 #--------------------------------------------------------------------
 #                              Administrative                                                         
@@ -155,398 +154,398 @@ command /TestingGui [<text>]:
 #				set {ChatEdit.%player%} to "ChangeName"
 		
 on chat:
-	if {ChatEdit.%player%} is set:
-		cancel event
-		if {ChatEdit.%player%} is "ChangeName":
-			set {ServerName} to message
-			delete {ChatEdit.%player%}
-			send " " to player
-			send "&7Server name has been updated. Server is now named ""&f%{ServerName}%""&7." to player
-			send " " to player
+  if {ChatEdit.%player%} is set:
+    cancel event
+    if {ChatEdit.%player%} is "ChangeName":
+      set {ServerName} to message
+      delete {ChatEdit.%player%}
+      send " " to player
+      send "&7Server name has been updated. Server is now named ""&f%{ServerName}%""&7." to player
+      send " " to player
 	  
 command /setitem <text>:
-	permission: *
-	trigger:
-		set {Item.%args 1%} to player's held item
-		send "&7[ %{ServerName}% &7] %player's held item% set to {Item.%args 1%}" to player
+  permission: *
+  trigger:
+    set {Item.%args 1%} to player's held item
+    send "&7[ %{ServerName}% &7] %player's held item% set to {Item.%args 1%}" to player
 
 command /setitemstack <text>:
-	permission: *
-	trigger:
-		set {_item} to player's held item
-		add player's held item to {Item.%args%::*}
-		loop 63 times:
-			add {_item} to player
-			wait 2 ticks
-			add player's held item to {Item.%args%::*}
-			send "add %player's held item% to {Item.%args%::*}" to player
+  permission: *
+  trigger:
+    set {_item} to player's held item
+    add player's held item to {Item.%args%::*}
+    loop 63 times:
+      add {_item} to player
+      wait 2 ticks
+      add player's held item to {Item.%args%::*}
+      send "add %player's held item% to {Item.%args%::*}" to player
 
 command /invsee <player>:
-	trigger:
-		show target's inventory to player
+  trigger:
+    show target's inventory to player
 #--------------------------------------------------------------------
 #                              Lifesteal                                                   
 #--------------------------------------------------------------------
 
 command /Lifesteal [<text>]:
-	permission: Lifesteal.Admin.*
-	permission message: &7[ %{ServerName}% &7] You do not have permissions for that command. (Lifesteal)
-	aliases: ls, lsgui, 
-	trigger:
-		if args 1 is not set:
-			open chest with 3 rows named "&0[ Lifesteal Settings ]" to player
-			if {Lifesteal} is "Disabled":
-				format slot 0 of player with a red wool named "&7Currently &cDisabled&7." with lore "&7> Click to &aEnable&7." to run [make player execute command "/Lifesteal Enable"]
-			if {Lifesteal} is "Enabled":					
-				format slot 0 of player with a lime wool named "&7Currently &aEnabled&7." with lore "&7> Click to &cDisable&7." to run [make player execute command "/Lifesteal Disable"]
-			format slot 1 of player with a black glass pane named " " to be unstealable
-			format slot 2 of player with {Item.HeartDecrease} named "&7Decrease Lifesteal by 0.5 Hearts." to run [make player execute command "/Lifesteal Decrease"]
-			format slot 3 of player with {Item.Heart} named "&7Hearts stolen on player kill." with lore "&7> %{Lifesteal.Hearts}%" to be unstealable
-			format slot 4 of player with {Item.HeartIncrease} named "&7Increase Lifesteal by 0.5 Hearts." to run [make player execute command "/Lifesteal Increase"]
-			format slot 5 of player with a black glass pane named " " to be unstealable
-			if {Ghosts} is "Enabled":
-				format slot 6 of player with a skeleton skull named "&7Ghosts: Currently &aEnabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> This &ais &7a recommended setting. ", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &cDisable." to run [make player execute command "/Lifesteal GhostsOff"]
-			if {Ghosts} is "Disabled":
-				format slot 6 of player with a skeleton skull named "&7Ghosts: Currently &cDisabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable." to run [make player execute command "/Lifesteal GhostsOn"]
-			if {GhostMode} is "Spectator":
-				format slot 7 of player with a wither skeleton skull named "&7Ghost Mode: &fSpectator&7." with lore "&7> When a player dies they will be put", "&7Into spectator gamemode.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to change to &fFlight + Invisibility&7." to run [make player execute command "/Lifesteal GhostModeFlightInvisiblity"]
-			if {GhostMode} is "FlightInvisiblity":
-				format slot 7 of player with a wither skeleton skull named "&7Ghost Mode: &fFlight + Invisibility&7." with lore "&7> When a player dies they will turn", "&7Invisibile and be given flight.", "&7> This &ais &7a recommended setting. ", "&7> Click to change to &fSpectator&7." to run [make player execute command "/Lifesteal GhostModeSpectator"]
-			if {Resurrection} is "Enabled":
-				format slot 8 of player with a totem of undying named "&7Resurrection: Currently &aEnabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This &ais &7a recommended setting. ", "&7> Click to &cDisable." to run [make player execute command "/Lifesteal ResurrectionOff"]
-			if {Resurrection} is "Disabled":
-				format slot 8 of player with a totem of undying named "&7Resurrection: Currently &cDisabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable." to run [make player execute command "/Lifesteal ResurrectionOn"]
-			format slot 9 of player with a nametag named "&8[ &7Server Name &8]" with lore "&7%{ServerName}%" to run [make player execute command "/Lifesteal ChangeName"]
-			format slot 10 of player with a black glass pane named " " to be unstealable
-			format slot 11 of player with a black glass pane named " " to be unstealable
-			format slot 12 of player with {Item.CombatTimerDecrease} named "&7Decrease Combat Timer by 1 Second" to run [make player execute command "/Lifesteal DecreaseCombatTimer"]
-			format slot 13 of player with a clock named "&7Combat Timer: &f%{CombatTimer}% &fSeconds&7." with lore "&7> This effects the length of time that", "&7A player must go after being hit by", "&7A player before being safe to logout." to be unstealable
-			format slot 14 of player with {Item.CombatTimerIncrease} named "&7Increase Combat Timer by 1 Second" to run [make player execute command "/Lifesteal IncreaseCombatTimer"]
-			format slot 15 of player with a black glass pane named " " to be unstealable
-			format slot 16 of player with a black glass pane named " " to be unstealable
-			format slot 17 of player with a barrier named "&cReset Settings" to run [make player execute command "/Lifesteal Reset"]
-			if {MaxHearts} is "Enabled":
-				format slot 18 of player with a red shulker box named "&7Heart Cap: Currently &aEnabled&7." with lore "&7> Players stop gaining hearts,", "&7Once they reach this threshold.", "&7> Click to &cDisable." to run [make player execute command "/Lifesteal MaxHeartsOff"]
-			if {MaxHearts} is "Disabled":
-				format slot 18 of player with a red shulker box named "&7Heart Cap: Currently &cDisabled&7." with lore "&7> Players stop gaining hearts,", "&7Once they reach this threshold.", "&7> Click to &aEnable." to run [make player execute command "/Lifesteal MaxHeartsOn"]
-			format slot 19 of player with a black glass pane named " " to be unstealable
-			format slot 20 of player with a black glass pane named " " to be unstealable
-			format slot 21 of player with a black glass pane named " " to be unstealable
-			format slot 22 of player with {Item.MaxHeartsDecrease} named "&7Decrease Heart Cap by 0.5 Hearts." to run [make player execute command "/Lifesteal DecreaseMaxHearts"]
-			format slot 23 of player with a light blue shulker box named "&7Hearts Cap:" with lore "&7> %{Lifesteal.MaxHearts}%" to be unstealable
-			format slot 24 of player with {Item.MaxHeartsIncrease} named "&7Increase Heart Cap by 0.5 Hearts." to run [make player execute command "/Lifesteal IncreaseMaxHearts"]
-			format slot 25 of player with a black glass pane named " " to be unstealable
-			format slot 26 of player with a Barrier named "&cReset Player Data" to run [make player execute command "/Lifesteal ResetPlayer"]
-		if args 1 is "Enable":
-			format slot 0 of player with a lime wool named "&7Currently &aEnabled&7." with lore "&7> Click to &cDisable&7." to run [make player execute command "/Lifesteal Disable"]
-			send "&7[ %{ServerName}% &7] Lifesteal &aEnabled&7. (Lifesteal)" to player
-			set {Lifesteal} to "Enabled"
-		if args 1 is "Disable":
-			format slot 0 of player with a red wool named "&7Currently &cDisabled&7." with lore "&7> Click to &aEnable&7." to run [make player execute command "/Lifesteal Enable"]
-			send "&7[ %{ServerName}% &7] Lifesteal &cDisabled&7. (Lifesteal)" to player
-			set {Lifesteal} to "Disabled"
-		if args 1 is "Decrease":
-			if {Lifesteal.Hearts} is less than 1:
-				send "&7[ &4Exception Occurred &7] &cLifesteal cannot be less than 0.5 Hearts. (Lifesteal)" to player
-			if {Lifesteal.Hearts} is greater than or equal to 1:
-				subtract 0.5 from {Lifesteal.Hearts}
-				format slot 3 of player with {Item.Heart} named "&7Hearts stolen on player kill." with lore "&7> %{Lifesteal.Hearts}%" to be unstealable
-				send "&7[ %{ServerName}% &7] Lifesteal set to %{LifeSteal.Hearts}% &7Hearts. (Lifesteal)" to player
-		if args 1 is "Increase":
-			add 0.5 to {Lifesteal.Hearts}
-			format slot 3 of player with {Item.Heart} named "&7Hearts stolen on player kill." with lore "&7> %{Lifesteal.Hearts}%" to be unstealable
-			send "&7[ %{ServerName}% &7] Lifesteal set to %{LifeSteal.Hearts}% &7Hearts. (Lifesteal)" to player
-		if args 1 is "GhostsOff":
-			format slot 6 of player with a skeleton skull named "&7Ghosts: Currently &cDisabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable." to run [make player execute command "/Lifesteal GhostsOn"]
-			send "&7[ %{ServerName}% &7] Ghosts &cDisabled&7. (Lifesteal)" to player
-			set {Ghosts} to "Disabled"
-		if args 1 is "GhostsOn":
-			format slot 6 of player with a skeleton skull named "&7Ghosts: Currently &aEnabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This &ais &7a recommended setting. ", "&7> Click to &cDisable." to run [make player execute command "/Lifesteal GhostsOff"]
-			send "&7[ %{ServerName}% &7] Ghosts &aEnabled&7. (Lifesteal)" to player
-			set {Ghosts} to "Enabled"
-		if args 1 is "GhostModeFlightInvisiblity":
-			format slot 7 of player with a wither skeleton skull named "&7Ghost Mode: &fFlight + Invisibility&7." with lore "&7> When a player dies they will turn", "&7Invisibile and be given flight.", "&7> This &ais &7a recommended setting. ", "&7> Click to change to &fSpectator&7." to run [make player execute command "/Lifesteal GhostModeSpectator"]
-			send "&7[ %{ServerName}% &7] Ghost mode set to &fFlight + Invisiblity&7. (Lifesteal)" to player
-			set {GhostMode} to "FlightInvisiblity"
-		if args 1 is "GhostModeSpectator":
-			format slot 7 of player with a wither skeleton skull named "&7Ghost Mode: &fSpectator&7." with lore "&7> When a player dies they will be put", "&7Into spectator gamemode.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to change to &fFlight + Invisibility&7." to run [make player execute command "/Lifesteal GhostModeFlightInvisiblity"]
-			send "&7[ %{ServerName}% &7] Ghost mode set to &fSpectator&7. (Lifesteal)" to player
-			set {GhostMode} to "Spectator"
-		if args 1 is "ResurrectionOff":
-			format slot 8 of player with a totem of undying named "&7Resurrection: Currently &cDisabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable." to run [make player execute command "/Lifesteal ResurrectionOn"]
-			send "&7[ %{ServerName}% &7] Resurrection &cDisabled&7. (Lifesteal)" to player
-			set {Resurrection} to "Disabled"
-		if args 1 is "ResurrectionOn":
-			format slot 8 of player with a totem of undying named "&7Resurrection: Currently &aEnabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This &ais &7a recommended setting. ", "&7> Click to &cDisable." to run [make player execute command "/Lifesteal ResurrectionOff"]
-			send "&7[ %{ServerName}% &7] Resurrection &aEnabled&7. (Lifesteal)" to player
-			set {Resurrection} to "Enabled"
-		if args 1 is "DecreaseCombatTimer":
-			if {CombatTimer} is less than or equal to 0:
-				send "&7[ &4Exception Occurred &7] &cCombat Timer cannot be less than 0 Seconds. (Lifesteal)" to player
-			if {CombatTimer} is greater than or equal to 1:
-				subtract 1 from {CombatTimer}
-				format slot 13 of player with a clock named "&7Combat Timer: &f%{CombatTimer}% &fSeconds&7." with lore "&7> This effects the length of time that", "&7A player must go after being hit by", "&7A player before being safe to logout." to be unstealable
-				send "&7[ %{ServerName}% &7] Combat Timer set to %{CombatTimer}% &7Seconds. (Lifesteal)" to player
-		if args 1 is "IncreaseCombatTimer":
-			add 1 to {CombatTimer}
-			format slot 13 of player with a clock named "&7Combat Timer: &f%{CombatTimer}% &fSeconds&7." with lore "&7> This effects the length of time that", "&7A player must go after being hit by", "&7A player before being safe to logout." to be unstealable
-			send "&7[ %{ServerName}% &7] Combat Timer set to %{CombatTimer}% &7Seconds. (Lifesteal)" to player
-		if args 1 is "ChangeName":
-			close the player's inventory
-			send " " to player
-			send "&7&oEnter your server's name into chat." to player
-			set {ChatEdit.%player%} to "ChangeName"
-		if args 1 is "Reset":
-			send "&7[ %{ServerName}% &7] Settings reset to default. (Lifesteal)" to player
-			close the player's inventory
-			set {CombatTimer} to 5
-			set {Ghosts} to "Enabled"
-			set {Resurrection} to "Disabled"
-			set {GhostMode} to "FlightInvisiblity"
-			set {Lifesteal} to "Disabled"
-			set {Lifesteal.Hearts} to 1
-			set {MaxHearts} to "Disabled"
-			set {Lifesteal.MaxHearts} to 10
-		if args 1 is "ResetPlayer":
-			loop all players:
-				set loop-players's max health to 10
-				send "&7[ %{ServerName}% &7] players have been set to 10 &cHearts." to player
-		if {Lifesteal} is "Disabled":
-			send "&7[ &4Exception Occurred &7] &cLifesteal is disabled. (Lifesteal)" to player
-		if args 1 is "MaxHeartsOff":
-			format slot 18 of player with a red shulker box named "&7Heart Cap: Currently &cDisabled&7." with lore "&7> Players stop gaining hearts,", "&7Once they reach this threshold.", "&7> Click to &aEnable." to run [make player execute command "/Lifesteal MaxHeartsOn"]
-			send "&7[ %{ServerName}% &7] Heart Cap &cDisabled&7. (Lifesteal)" to player
-			set {MaxHearts} to "Disabled"
-		if args 1 is "MaxHeartsOn":
-			format slot 18 of player with a red shulker box named "&7Heart Cap: Currently &aEnabled&7." with lore "&7> Players stop gaining hearts,", "&7Once they reach this threshold.", "&7> Click to &cDisable." to run [make player execute command "/Lifesteal MaxHeartsOff"]
-			send "&7[ %{ServerName}% &7] Heart Cap &aEnabled&7. (Lifesteal)" to player
-			set {MaxHearts} to "Enabled"
-		if args 1 is "DecreaseMaxHearts":
-			if {Lifesteal.MaxHearts} is less than 1:
-				send "&7[ &4Exception Occurred &7] &cHeart Cap cannot be less than 0.5 Hearts. (Lifesteal)" to player
-			if {Lifesteal.MaxHearts} is greater than or equal to 1:
-				subtract 0.5 from {Lifesteal.MaxHearts}
-				format slot 23 of player with a light blue shulker box named "&7Hearts stolen on player kill." with lore "&7> %{Lifesteal.MaxHearts}%" to be unstealable
-				send "&7[ %{ServerName}% &7] Heart Cap set to %{LifeSteal.MaxHearts}% &7Hearts. (Lifesteal)" to player
-				loop all players:
-					if {Lifesteal.MaxHearts} is less than loop-player's max health:
-						send "&7[ %{ServerName}% &7] Your health was reduced to the heart cap. (%{Lifesteal.MaxHearts}%&7)" to loop-player
-						set {_n} to loop-player's max health - {Lifesteal.MaxHearts}
-						subtract {_n} from loop-player's max health
-						loop {_n} * 2 times:
-							give {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." to loop-player
-		if args 1 is "IncreaseMaxHearts":
-			add 0.5 to {Lifesteal.MaxHearts}
-			format slot 23 of player with a light blue shulker box named "&7Hearts Cap:" with lore "&7> %{Lifesteal.MaxHearts}%" to be unstealable
-			send "&7[ %{ServerName}% &7] Heart Cap set to %{LifeSteal.MaxHearts}% &7Hearts. (Lifesteal)" to player
-			loop all players:
-				if {Lifesteal.MaxHearts} is less than loop-player's max health:
-					send "&7[ %{ServerName}% &7] Your health was reduced to the heart cap. (%{Lifesteal.MaxHearts}%&7)" to loop-player
-					set {_n} to loop-player's max health - {Lifesteal.MaxHearts}
-					subtract {_n} from loop-player's max health
-					loop {_n} * 2 times:
-						give {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." to loop-player
+  permission: Lifesteal.Admin.*
+  permission message: &7[ %{ServerName}% &7] You do not have permissions for that command. (Lifesteal)
+  aliases: ls, lsgui, 
+  trigger:
+    if args 1 is not set:
+      open chest with 3 rows named "&0[ Lifesteal Settings ]" to player
+      if {Lifesteal} is "Disabled":
+        format slot 0 of player with a red wool named "&7Currently &cDisabled&7." with lore "&7> Click to &aEnable&7." to run [make player execute command "/Lifesteal Enable"]
+      if {Lifesteal} is "Enabled":					
+        format slot 0 of player with a lime wool named "&7Currently &aEnabled&7." with lore "&7> Click to &cDisable&7." to run [make player execute command "/Lifesteal Disable"]
+      format slot 1 of player with a black glass pane named " " to be unstealable
+      format slot 2 of player with {Item.HeartDecrease} named "&7Decrease Lifesteal by 0.5 Hearts." to run [make player execute command "/Lifesteal Decrease"]
+      format slot 3 of player with {Item.Heart} named "&7Hearts stolen on player kill." with lore "&7> %{Lifesteal.Hearts}%" to be unstealable
+      format slot 4 of player with {Item.HeartIncrease} named "&7Increase Lifesteal by 0.5 Hearts." to run [make player execute command "/Lifesteal Increase"]
+      format slot 5 of player with a black glass pane named " " to be unstealable
+      if {Ghosts} is "Enabled":
+        format slot 6 of player with a skeleton skull named "&7Ghosts: Currently &aEnabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> This &ais &7a recommended setting. ", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &cDisable." to run [make player execute command "/Lifesteal GhostsOff"]
+      if {Ghosts} is "Disabled":
+        format slot 6 of player with a skeleton skull named "&7Ghosts: Currently &cDisabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable." to run [make player execute command "/Lifesteal GhostsOn"]
+      if {GhostMode} is "Spectator":
+        format slot 7 of player with a wither skeleton skull named "&7Ghost Mode: &fSpectator&7." with lore "&7> When a player dies they will be put", "&7Into spectator gamemode.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to change to &fFlight + Invisibility&7." to run [make player execute command "/Lifesteal GhostModeFlightInvisiblity"]
+      if {GhostMode} is "FlightInvisiblity":
+        format slot 7 of player with a wither skeleton skull named "&7Ghost Mode: &fFlight + Invisibility&7." with lore "&7> When a player dies they will turn", "&7Invisibile and be given flight.", "&7> This &ais &7a recommended setting. ", "&7> Click to change to &fSpectator&7." to run [make player execute command "/Lifesteal GhostModeSpectator"]
+      if {Resurrection} is "Enabled":
+        format slot 8 of player with a totem of undying named "&7Resurrection: Currently &aEnabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This &ais &7a recommended setting. ", "&7> Click to &cDisable." to run [make player execute command "/Lifesteal ResurrectionOff"]
+      if {Resurrection} is "Disabled":
+        format slot 8 of player with a totem of undying named "&7Resurrection: Currently &cDisabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable." to run [make player execute command "/Lifesteal ResurrectionOn"]
+      format slot 9 of player with a nametag named "&8[ &7Server Name &8]" with lore "&7%{ServerName}%" to run [make player execute command "/Lifesteal ChangeName"]
+      format slot 10 of player with a black glass pane named " " to be unstealable
+      format slot 11 of player with a black glass pane named " " to be unstealable
+      format slot 12 of player with {Item.CombatTimerDecrease} named "&7Decrease Combat Timer by 1 Second" to run [make player execute command "/Lifesteal DecreaseCombatTimer"]
+      format slot 13 of player with a clock named "&7Combat Timer: &f%{CombatTimer}% &fSeconds&7." with lore "&7> This effects the length of time that", "&7A player must go after being hit by", "&7A player before being safe to logout." to be unstealable
+      format slot 14 of player with {Item.CombatTimerIncrease} named "&7Increase Combat Timer by 1 Second" to run [make player execute command "/Lifesteal IncreaseCombatTimer"]
+      format slot 15 of player with a black glass pane named " " to be unstealable
+      format slot 16 of player with a black glass pane named " " to be unstealable
+      format slot 17 of player with a barrier named "&cReset Settings" to run [make player execute command "/Lifesteal Reset"]
+      if {MaxHearts} is "Enabled":
+        format slot 18 of player with a red shulker box named "&7Heart Cap: Currently &aEnabled&7." with lore "&7> Players stop gaining hearts,", "&7Once they reach this threshold.", "&7> Click to &cDisable." to run [make player execute command "/Lifesteal MaxHeartsOff"]
+      if {MaxHearts} is "Disabled":
+        format slot 18 of player with a red shulker box named "&7Heart Cap: Currently &cDisabled&7." with lore "&7> Players stop gaining hearts,", "&7Once they reach this threshold.", "&7> Click to &aEnable." to run [make player execute command "/Lifesteal MaxHeartsOn"]
+      format slot 19 of player with a black glass pane named " " to be unstealable
+      format slot 20 of player with a black glass pane named " " to be unstealable
+      format slot 21 of player with a black glass pane named " " to be unstealable
+      format slot 22 of player with {Item.MaxHeartsDecrease} named "&7Decrease Heart Cap by 0.5 Hearts." to run [make player execute command "/Lifesteal DecreaseMaxHearts"]
+      format slot 23 of player with a light blue shulker box named "&7Hearts Cap:" with lore "&7> %{Lifesteal.MaxHearts}%" to be unstealable
+      format slot 24 of player with {Item.MaxHeartsIncrease} named "&7Increase Heart Cap by 0.5 Hearts." to run [make player execute command "/Lifesteal IncreaseMaxHearts"]
+      format slot 25 of player with a black glass pane named " " to be unstealable
+      format slot 26 of player with a Barrier named "&cReset Player Data" to run [make player execute command "/Lifesteal ResetPlayer"]
+    if args 1 is "Enable":
+      format slot 0 of player with a lime wool named "&7Currently &aEnabled&7." with lore "&7> Click to &cDisable&7." to run [make player execute command "/Lifesteal Disable"]
+      send "&7[ %{ServerName}% &7] Lifesteal &aEnabled&7. (Lifesteal)" to player
+      set {Lifesteal} to "Enabled"
+    if args 1 is "Disable":
+      format slot 0 of player with a red wool named "&7Currently &cDisabled&7." with lore "&7> Click to &aEnable&7." to run [make player execute command "/Lifesteal Enable"]
+      send "&7[ %{ServerName}% &7] Lifesteal &cDisabled&7. (Lifesteal)" to player
+      set {Lifesteal} to "Disabled"
+    if args 1 is "Decrease":
+      if {Lifesteal.Hearts} is less than 1:
+        send "&7[ &4Exception Occurred &7] &cLifesteal cannot be less than 0.5 Hearts. (Lifesteal)" to player
+      if {Lifesteal.Hearts} is greater than or equal to 1:
+        subtract 0.5 from {Lifesteal.Hearts}
+        format slot 3 of player with {Item.Heart} named "&7Hearts stolen on player kill." with lore "&7> %{Lifesteal.Hearts}%" to be unstealable
+        send "&7[ %{ServerName}% &7] Lifesteal set to %{LifeSteal.Hearts}% &7Hearts. (Lifesteal)" to player
+    if args 1 is "Increase":
+      add 0.5 to {Lifesteal.Hearts}
+      format slot 3 of player with {Item.Heart} named "&7Hearts stolen on player kill." with lore "&7> %{Lifesteal.Hearts}%" to be unstealable
+      send "&7[ %{ServerName}% &7] Lifesteal set to %{LifeSteal.Hearts}% &7Hearts. (Lifesteal)" to player
+    if args 1 is "GhostsOff":
+      format slot 6 of player with a skeleton skull named "&7Ghosts: Currently &cDisabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable." to run [make player execute command "/Lifesteal GhostsOn"]
+      send "&7[ %{ServerName}% &7] Ghosts &cDisabled&7. (Lifesteal)" to player
+      set {Ghosts} to "Disabled"
+    if args 1 is "GhostsOn":
+      format slot 6 of player with a skeleton skull named "&7Ghosts: Currently &aEnabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This &ais &7a recommended setting. ", "&7> Click to &cDisable." to run [make player execute command "/Lifesteal GhostsOff"]
+      send "&7[ %{ServerName}% &7] Ghosts &aEnabled&7. (Lifesteal)" to player
+      set {Ghosts} to "Enabled"
+    if args 1 is "GhostModeFlightInvisiblity":
+      format slot 7 of player with a wither skeleton skull named "&7Ghost Mode: &fFlight + Invisibility&7." with lore "&7> When a player dies they will turn", "&7Invisibile and be given flight.", "&7> This &ais &7a recommended setting. ", "&7> Click to change to &fSpectator&7." to run [make player execute command "/Lifesteal GhostModeSpectator"]
+      send "&7[ %{ServerName}% &7] Ghost mode set to &fFlight + Invisiblity&7. (Lifesteal)" to player
+      set {GhostMode} to "FlightInvisiblity"
+    if args 1 is "GhostModeSpectator":
+      format slot 7 of player with a wither skeleton skull named "&7Ghost Mode: &fSpectator&7." with lore "&7> When a player dies they will be put", "&7Into spectator gamemode.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to change to &fFlight + Invisibility&7." to run [make player execute command "/Lifesteal GhostModeFlightInvisiblity"]
+      send "&7[ %{ServerName}% &7] Ghost mode set to &fSpectator&7. (Lifesteal)" to player
+      set {GhostMode} to "Spectator"
+    if args 1 is "ResurrectionOff":
+      format slot 8 of player with a totem of undying named "&7Resurrection: Currently &cDisabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable." to run [make player execute command "/Lifesteal ResurrectionOn"]
+      send "&7[ %{ServerName}% &7] Resurrection &cDisabled&7. (Lifesteal)" to player
+      set {Resurrection} to "Disabled"
+    if args 1 is "ResurrectionOn":
+      format slot 8 of player with a totem of undying named "&7Resurrection: Currently &aEnabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This &ais &7a recommended setting. ", "&7> Click to &cDisable." to run [make player execute command "/Lifesteal ResurrectionOff"]
+      send "&7[ %{ServerName}% &7] Resurrection &aEnabled&7. (Lifesteal)" to player
+      set {Resurrection} to "Enabled"
+    if args 1 is "DecreaseCombatTimer":
+      if {CombatTimer} is less than or equal to 0:
+        send "&7[ &4Exception Occurred &7] &cCombat Timer cannot be less than 0 Seconds. (Lifesteal)" to player
+      if {CombatTimer} is greater than or equal to 1:
+        subtract 1 from {CombatTimer}
+        format slot 13 of player with a clock named "&7Combat Timer: &f%{CombatTimer}% &fSeconds&7." with lore "&7> This effects the length of time that", "&7A player must go after being hit by", "&7A player before being safe to logout." to be unstealable
+        send "&7[ %{ServerName}% &7] Combat Timer set to %{CombatTimer}% &7Seconds. (Lifesteal)" to player
+    if args 1 is "IncreaseCombatTimer":
+      add 1 to {CombatTimer}
+      format slot 13 of player with a clock named "&7Combat Timer: &f%{CombatTimer}% &fSeconds&7." with lore "&7> This effects the length of time that", "&7A player must go after being hit by", "&7A player before being safe to logout." to be unstealable
+      send "&7[ %{ServerName}% &7] Combat Timer set to %{CombatTimer}% &7Seconds. (Lifesteal)" to player
+    if args 1 is "ChangeName":
+      close the player's inventory
+      send " " to player
+      send "&7&oEnter your server's name into chat." to player
+      set {ChatEdit.%player%} to "ChangeName"
+    if args 1 is "Reset":
+      send "&7[ %{ServerName}% &7] Settings reset to default. (Lifesteal)" to player
+      close the player's inventory
+      set {CombatTimer} to 5
+      set {Ghosts} to "Enabled"
+      set {Resurrection} to "Disabled"
+      set {GhostMode} to "FlightInvisiblity"
+      set {Lifesteal} to "Disabled"
+      set {Lifesteal.Hearts} to 1
+      set {MaxHearts} to "Disabled"
+      set {Lifesteal.MaxHearts} to 10
+    if args 1 is "ResetPlayer":
+      loop all players:
+        set loop-players's max health to 10
+        send "&7[ %{ServerName}% &7] players have been set to 10 &cHearts." to player
+    if {Lifesteal} is "Disabled":
+      send "&7[ &4Exception Occurred &7] &cLifesteal is disabled. (Lifesteal)" to player
+    if args 1 is "MaxHeartsOff":
+      format slot 18 of player with a red shulker box named "&7Heart Cap: Currently &cDisabled&7." with lore "&7> Players stop gaining hearts,", "&7Once they reach this threshold.", "&7> Click to &aEnable." to run [make player execute command "/Lifesteal MaxHeartsOn"]
+      send "&7[ %{ServerName}% &7] Heart Cap &cDisabled&7. (Lifesteal)" to player
+      set {MaxHearts} to "Disabled"
+    if args 1 is "MaxHeartsOn":
+      format slot 18 of player with a red shulker box named "&7Heart Cap: Currently &aEnabled&7." with lore "&7> Players stop gaining hearts,", "&7Once they reach this threshold.", "&7> Click to &cDisable." to run [make player execute command "/Lifesteal MaxHeartsOff"]
+      send "&7[ %{ServerName}% &7] Heart Cap &aEnabled&7. (Lifesteal)" to player
+      set {MaxHearts} to "Enabled"
+    if args 1 is "DecreaseMaxHearts":
+      if {Lifesteal.MaxHearts} is less than 1:
+        send "&7[ &4Exception Occurred &7] &cHeart Cap cannot be less than 0.5 Hearts. (Lifesteal)" to player
+      if {Lifesteal.MaxHearts} is greater than or equal to 1:
+        subtract 0.5 from {Lifesteal.MaxHearts}
+        format slot 23 of player with a light blue shulker box named "&7Hearts stolen on player kill." with lore "&7> %{Lifesteal.MaxHearts}%" to be unstealable
+        send "&7[ %{ServerName}% &7] Heart Cap set to %{LifeSteal.MaxHearts}% &7Hearts. (Lifesteal)" to player
+        loop all players:
+          if {Lifesteal.MaxHearts} is less than loop-player's max health:
+            send "&7[ %{ServerName}% &7] Your health was reduced to the heart cap. (%{Lifesteal.MaxHearts}%&7)" to loop-player
+            set {_n} to loop-player's max health - {Lifesteal.MaxHearts}
+            subtract {_n} from loop-player's max health
+            loop {_n} * 2 times:
+              give {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." to loop-player
+    if args 1 is "IncreaseMaxHearts":
+      add 0.5 to {Lifesteal.MaxHearts}
+      format slot 23 of player with a light blue shulker box named "&7Hearts Cap:" with lore "&7> %{Lifesteal.MaxHearts}%" to be unstealable
+      send "&7[ %{ServerName}% &7] Heart Cap set to %{LifeSteal.MaxHearts}% &7Hearts. (Lifesteal)" to player
+      loop all players:
+        if {Lifesteal.MaxHearts} is less than loop-player's max health:
+          send "&7[ %{ServerName}% &7] Your health was reduced to the heart cap. (%{Lifesteal.MaxHearts}%&7)" to loop-player
+          set {_n} to loop-player's max health - {Lifesteal.MaxHearts}
+          subtract {_n} from loop-player's max health
+          loop {_n} * 2 times:
+            give {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." to loop-player
 
 on damage:
-	if {Status.%victim%} is "GhostFlightInvisiblity":
-		cancel event
-	if {Status.%attacker%} is "GhostFlightInvisiblity":
-		cancel event
+  if {Status.%victim%} is "GhostFlightInvisiblity":
+    cancel event
+  if {Status.%attacker%} is "GhostFlightInvisiblity":
+    cancel event
 
 on drop:
-	if {GhostMode} is "FlightInvisiblity":
-		if {Status.%player%} is "GhostFlightInvisibility":
-			cancel event
+  if {GhostMode} is "FlightInvisiblity":
+    if {Status.%player%} is "GhostFlightInvisibility":
+      cancel event
 on join:
-	loop 3600 times:
-		if player is online:
-			wait 1 second
-			if {Status.%player%} is "GhostFlightInvisibility":
-				apply invisibility 1 without particles to player for 1 hour
-			if {CombatTimer.%player%} is greater than 0:
-				subtract 1 from {CombatTimer.%player%}
-			if {CombatTimer.%player%} is 0:
-				delete {RecentAttacker.%player%}
-		if player is offline:
-			wait 1 second
-			if {CombatTimer.%player%} is greater than 0:
-				subtract 1 from {CombatTimer.%player%}
-			if {CombatTimer.%player%} is 0:
-				delete {RecentAttacker.%player%}
-				stop
+  loop 3600 times:
+    if player is online:
+      wait 1 second
+      if {Status.%player%} is "GhostFlightInvisibility":
+        apply invisibility 1 without particles to player for 1 hour
+      if {CombatTimer.%player%} is greater than 0:
+        subtract 1 from {CombatTimer.%player%}
+      if {CombatTimer.%player%} is 0:
+        delete {RecentAttacker.%player%}
+    if player is offline:
+      wait 1 second
+      if {CombatTimer.%player%} is greater than 0:
+        subtract 1 from {CombatTimer.%player%}
+      if {CombatTimer.%player%} is 0:
+        delete {RecentAttacker.%player%}
+        stop
 on quit:
-	if {CombatTimer.%player%} is greater than 0:
-		kill the player
-		send "%player% combat logged." to all players
+  if {CombatTimer.%player%} is greater than 0:
+    kill the player
+    send "%player% combat logged." to all players
 		
 on damage:
-	if attacker is a player:
-		if victim is a player:
-			set {CombatTimer.%victim%} to {CombatTimer}
-			set {RecentAttacker.%victim%} to "%attacker%"
+  if attacker is a player:
+    if victim is a player:
+      set {CombatTimer.%victim%} to {CombatTimer}
+      set {RecentAttacker.%victim%} to "%attacker%"
 
 on death:
-	if {Lifesteal} is "Enabled":
-		if victim is a player:
-			if {RecentAttacker.%victim%} is set:
-				set {_attacker} to {RecentAttacker.%victim%} parsed as a player
-				if victim's max health - {Lifesteal.Hearts} is less than or equal to 0:
-					if {Ghosts} is "Enabled":
-						if {MaxHearts} is "Disabled":
-							add victim's max health to attacker's max health
-						if {MaxHearts} is "Enabled":
-							if victim's max health + attacker's max health is greater than or equal to {Lifesteal.MaxHearts}:
-								set {_n} to {Lifesteal.MaxHearts} - attacker's max health
-								set {_n} to victim's max health - {_n} 
-								loop {_n} * 2 times:
-									drop {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." at victim's location
-								set attacker's max health to {Lifesteal.MaxHearts}
-							if victim's max health + attacker's max health is less than {Lifesteal.MaxHearts}:
-								add victim's max health to attacker's max health
-						if {GhostMode} is "Spectator":
-							set victim's max health to 0
-							set victim's gamemode to spectator
-							set {Status.%victim%} to "GhostSpectator"
-						if {GhostMode} is "FlightInvisiblity":
-							set victim's max health to 0
-							apply invisibility 1 without particles to victim for 1 hour
-							set victim's flight mode to true
-							set {Status.%victim%} to "GhostFlightInvisiblity"
-					if {Ghosts} is "Disabled":
-						if {MaxHearts} is "Disabled":
-							add victim's max health - 0.5 to attacker's max health
-						if {MaxHearts} is "Enabled":
-							if victim's max health + attacker's max health is greater than or equal to {Lifesteal.MaxHearts}:
-								set {_n} to {Lifesteal.MaxHearts} - attacker's max health
-								set {_n} to victim's max health - {_n} 
-								loop {_n} * 2 times:
-									drop {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." at victim's location
-								set attacker's max health to {Lifesteal.MaxHearts}
-							if victim's max health + attacker's max health is less than {Lifesteal.MaxHearts}:
-								add victim's max health - 0.5 to attacker's max health
-						set victim's max health to 0.5
-				if victim's max health - {Lifesteal.Hearts} is greater than or equal to 0.5:				
-					subtract {LifeSteal.Hearts} from victim's max health	
-					if {MaxHearts} is "Disabled":	
-						add {LifeSteal.Hearts} to attacker's max health
-					if {MaxHearts} is "Enabled":
-						if {Lifesteal.Hearts} + attacker's max health is greater than or equal to {Lifesteal.MaxHearts}:
-							set {_n} to {Lifesteal.MaxHearts} - attacker's max health
-							set {_n} to {Lifesteal.Hearts} - {_n} 
-							loop {_n} * 2 times:
-								drop {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." at victim's location
-							set attacker's max health to {Lifesteal.MaxHearts}
-						if {Lifesteal.Hearts} + attacker's max health is less than {Lifesteal.MaxHearts}:
-							add {Lifesteal.Hearts} to attacker's max health
+  if {Lifesteal} is "Enabled":
+    if victim is a player:
+      if {RecentAttacker.%victim%} is set:
+        set {_attacker} to {RecentAttacker.%victim%} parsed as a player
+        if victim's max health - {Lifesteal.Hearts} is less than or equal to 0:
+          if {Ghosts} is "Enabled":
+            if {MaxHearts} is "Disabled":
+              add victim's max health to attacker's max health
+            if {MaxHearts} is "Enabled":
+              if victim's max health + attacker's max health is greater than or equal to {Lifesteal.MaxHearts}:
+                set {_n} to {Lifesteal.MaxHearts} - attacker's max health
+                set {_n} to victim's max health - {_n} 
+                loop {_n} * 2 times:
+                  drop {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." at victim's location
+                set attacker's max health to {Lifesteal.MaxHearts}
+              if victim's max health + attacker's max health is less than {Lifesteal.MaxHearts}:
+                add victim's max health to attacker's max health
+            if {GhostMode} is "Spectator":
+              set victim's max health to 0
+              set victim's gamemode to spectator
+              set {Status.%victim%} to "GhostSpectator"
+            if {GhostMode} is "FlightInvisiblity":
+              set victim's max health to 0
+              apply invisibility 1 without particles to victim for 1 hour
+              set victim's flight mode to true
+              set {Status.%victim%} to "GhostFlightInvisiblity"
+          if {Ghosts} is "Disabled":
+            if {MaxHearts} is "Disabled":
+              add victim's max health - 0.5 to attacker's max health
+            if {MaxHearts} is "Enabled":
+              if victim's max health + attacker's max health is greater than or equal to {Lifesteal.MaxHearts}:
+                set {_n} to {Lifesteal.MaxHearts} - attacker's max health
+                set {_n} to victim's max health - {_n} 
+                loop {_n} * 2 times:
+                  drop {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." at victim's location
+                set attacker's max health to {Lifesteal.MaxHearts}
+              if victim's max health + attacker's max health is less than {Lifesteal.MaxHearts}:
+                add victim's max health - 0.5 to attacker's max health
+            set victim's max health to 0.5
+        if victim's max health - {Lifesteal.Hearts} is greater than or equal to 0.5:				
+          subtract {LifeSteal.Hearts} from victim's max health	
+          if {MaxHearts} is "Disabled":	
+            add {LifeSteal.Hearts} to attacker's max health
+          if {MaxHearts} is "Enabled":
+            if {Lifesteal.Hearts} + attacker's max health is greater than or equal to {Lifesteal.MaxHearts}:
+              set {_n} to {Lifesteal.MaxHearts} - attacker's max health
+              set {_n} to {Lifesteal.Hearts} - {_n} 
+              loop {_n} * 2 times:
+                drop {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." at victim's location
+              set attacker's max health to {Lifesteal.MaxHearts}
+            if {Lifesteal.Hearts} + attacker's max health is less than {Lifesteal.MaxHearts}:
+              add {Lifesteal.Hearts} to attacker's max health
 
 
 on join:
-	if {Status.%player%} is "GhostSpectator":
-		send "&c&lYou are dead." to player
-		set player's gamemode to spectator
-	if {Status.%player%} is "GhostFlightInvisibility":
-		send "&c&lYou are dead." to player
-		set player's gamemode to adventure
-		apply invisibility 1 without particles to player for 1 hour
-		set player's flight mode to true
-	if {Lifesteal.MaxHearts} is less than player's max health:
-		send "&7[ %{ServerName}% &7] Your health was reduced to the heart cap. (%{Lifesteal.MaxHearts}%&7)" to player
-		set {_n} to player's max health - {Lifesteal.MaxHearts}
-		subtract {_n} from player's max health
-		loop {_n} * 2 times:
-			give {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." to player
+  if {Status.%player%} is "GhostSpectator":
+    send "&c&lYou are dead." to player
+    set player's gamemode to spectator
+  if {Status.%player%} is "GhostFlightInvisibility":
+    send "&c&lYou are dead." to player
+    set player's gamemode to adventure
+    apply invisibility 1 without particles to player for 1 hour
+    set player's flight mode to true
+  if {Lifesteal.MaxHearts} is less than player's max health:
+    send "&7[ %{ServerName}% &7] Your health was reduced to the heart cap. (%{Lifesteal.MaxHearts}%&7)" to player
+    set {_n} to player's max health - {Lifesteal.MaxHearts}
+    subtract {_n} from player's max health
+    loop {_n} * 2 times:
+      give {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." to player
 
 command /revive <player>:
-	trigger:
-		if {Lifesteal} is "Enabled":
-			if {Resurrection} is "Enabled":
-				if {Status.%target%} is "GhostSpectator":
-					if player's max health is greater than or equal to 1.5:
-						set {Status.%target%} to "Alive"
-						subtract 1 from player's max health
-						set target's max health to 1
-						set target's gamemode to survival
-						send "&7[ %{ServerName}% &7] You revived &f%target%&7! (Lifesteal)" to player
-						send "&7[ %{ServerName}% &7] You were revived by &f%player%&7! (Lifesteal)" to target
-					if player's max health is less than or equal to 1.5:
-						send " &7[ &4Exception Occurred &7] &cYou do not have enough hearts to do this. (Lifesteal)" to player
-				if {Status.%target%} is "GhostFlightInvisibilty":
-					if player's max health is greater than or equal to 1.5:
-						set {Status.%target%} to "Alive"
-						subtract 1 from player's max health
-						set target's gamemode to survival
-						set target's max health to 1
-						set target's flight mode to false
-						send "&7[ %{ServerName}% &7] You revived &f%target%&7! (Lifesteal)" to player
-						send "&7[ %{ServerName}% &7] You were revived by &f%player%&7! (Lifesteal)" to target
-						remove invisibility from player
-						wait 1 second
-						remove invisibility from player
-						stop
-					if player's max health is less than or equal to 1.5:
-						send " &7[ &4Exception Occurred &7] &cYou do not have enough hearts to do this. (Lifesteal)" to player
-				if {Status.%target%} is "Alive":
-					send "&7[ &4Exception Occurred &7] &cThat player is still alive. (Lifesteal)" to player			
-			if {Resurrection} is "Disabled":
-				send "&7[ &4Exception Occurred &7] &cResurrection is not enabled. (Lifesteal)" to player
-		if {Lifesteal} is "Disabled":
-			send "&7[ &4Exception Occurred &7] &cLifesteal is disabled. (Lifesteal)" to player			
+  trigger:
+    if {Lifesteal} is "Enabled":
+      if {Resurrection} is "Enabled":
+        if {Status.%target%} is "GhostSpectator":
+          if player's max health is greater than or equal to 1.5:
+            set {Status.%target%} to "Alive"
+            subtract 1 from player's max health
+            set target's max health to 1
+            set target's gamemode to survival
+            send "&7[ %{ServerName}% &7] You revived &f%target%&7! (Lifesteal)" to player
+            send "&7[ %{ServerName}% &7] You were revived by &f%player%&7! (Lifesteal)" to target
+          if player's max health is less than or equal to 1.5:
+            send " &7[ &4Exception Occurred &7] &cYou do not have enough hearts to do this. (Lifesteal)" to player
+        if {Status.%target%} is "GhostFlightInvisibilty":
+          if player's max health is greater than or equal to 1.5:
+            set {Status.%target%} to "Alive"
+            subtract 1 from player's max health
+            set target's gamemode to survival
+            set target's max health to 1
+            set target's flight mode to false
+            send "&7[ %{ServerName}% &7] You revived &f%target%&7! (Lifesteal)" to player
+            send "&7[ %{ServerName}% &7] You were revived by &f%player%&7! (Lifesteal)" to target
+            remove invisibility from player
+            wait 1 second
+            remove invisibility from player
+            stop
+          if player's max health is less than or equal to 1.5:
+            send " &7[ &4Exception Occurred &7] &cYou do not have enough hearts to do this. (Lifesteal)" to player
+        if {Status.%target%} is "Alive":
+          send "&7[ &4Exception Occurred &7] &cThat player is still alive. (Lifesteal)" to player			
+      if {Resurrection} is "Disabled":
+        send "&7[ &4Exception Occurred &7] &cResurrection is not enabled. (Lifesteal)" to player
+    if {Lifesteal} is "Disabled":
+      send "&7[ &4Exception Occurred &7] &cLifesteal is disabled. (Lifesteal)" to player			
 command /withdraw <number>:
-	trigger:
-		if {Lifesteal} is "Enabled":
-			if player's max health is greater than or equal to args 1 + 0.5:
-				if player doesn't have space for 64 barriers:
-					send "&7[ &4Exception Occurred &7] &cNot enough space in your inventory. (Lifesteal)" to player
-					stop
-				if player has space for 64 barriers:
-					send "&7[ %{ServerName}% &7] Withdraw %arg 1% &7Hearts. (Lifesteal)" to player
-					loop arg 1 * 2 times:
-						subtract 0.5 from player's max health
-						give {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." to player
-			if player's max health is less than args 1 + 0.5:
-				send "&7[ &4Exception Occurred &7] &cYou don't have sufficient health. (Lifesteal)" to player
-		if {Lifesteal} is "Disabled":
-			send "&7[ &4Exception Occurred &7] &cLifesteal is disabled. (Lifesteal)" to player			
+  trigger:
+    if {Lifesteal} is "Enabled":
+      if player's max health is greater than or equal to args 1 + 0.5:
+        if player doesn't have space for 64 barriers:
+          send "&7[ &4Exception Occurred &7] &cNot enough space in your inventory. (Lifesteal)" to player
+          stop
+        if player has space for 64 barriers:
+          send "&7[ %{ServerName}% &7] Withdraw %arg 1% &7Hearts. (Lifesteal)" to player
+          loop arg 1 * 2 times:
+            subtract 0.5 from player's max health
+            give {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." to player
+      if player's max health is less than args 1 + 0.5:
+        send "&7[ &4Exception Occurred &7] &cYou don't have sufficient health. (Lifesteal)" to player
+    if {Lifesteal} is "Disabled":
+      send "&7[ &4Exception Occurred &7] &cLifesteal is disabled. (Lifesteal)" to player			
  
 on right click:
-	if {Lifesteal} is "Enabled":
-		if {Item.Heart::*} contains player's held item:
-			if {Status.%player%} is "Alive":
-				if {MaxHearts} is "Disabled":
-					cancel event
-					remove 1 from item amount of player's tool
-					add 0.5 to player's max health
-				if {MaxHearts} is "Enabled":
-					if player's max health + 0.5 is less than or equal to {LifeSteal.MaxHearts}:
-						cancel event
-						remove 1 from item amount of player's tool
-						add 0.5 to player's max health
-					if player's max health + 0.5 is greater than {LifeSteal.MaxHearts}:
-						send "&7[ &4Exception Occurred &7] You are at the heart cap." to player
-			if {Status.%player%} is not "Alive":
-				send "&7[ &4Exception Occurred &7] You are dead." to player
-	if {Lifesteal} is "Disabled":
-		send "&7[ &4Exception Occurred &7] &cLifesteal is disabled. (Lifesteal)" to player			
+  if {Lifesteal} is "Enabled":
+    if {Item.Heart::*} contains player's held item:
+      if {Status.%player%} is "Alive":
+        if {MaxHearts} is "Disabled":
+          cancel event
+          remove 1 from item amount of player's tool
+          add 0.5 to player's max health
+        if {MaxHearts} is "Enabled":
+          if player's max health + 0.5 is less than or equal to {LifeSteal.MaxHearts}:
+            cancel event
+            remove 1 from item amount of player's tool
+            add 0.5 to player's max health
+          if player's max health + 0.5 is greater than {LifeSteal.MaxHearts}:
+            send "&7[ &4Exception Occurred &7] You are at the heart cap." to player
+      if {Status.%player%} is not "Alive":
+        send "&7[ &4Exception Occurred &7] You are dead." to player
+  if {Lifesteal} is "Disabled":
+    send "&7[ &4Exception Occurred &7] &cLifesteal is disabled. (Lifesteal)" to player			
 
 on place:
-	if {Item.Heart::*} contains player's held item:
-		cancel event
-	if {Item.Heart::*} contains player's off hand item:
-		cancel event
+  if {Item.Heart::*} contains player's held item:
+    cancel event
+  if {Item.Heart::*} contains player's off hand item:
+    cancel event
 
 command /hearts [<player>]:
-	trigger:
-		if {Lifesteal} is "Enabled":
-			if args 1 is not set:
-				send "&7[ %{ServerName}% &7] You have &c%player's max health% &7Hearts." to player
-			if args 1 is set:
-				send "&7[ %{ServerName}% &7] %target% has &c%target's max health% &7Hearts." to player
-		if {Lifesteal} is "Disabled":
-			send "&7[ &4Exception Occurred &7] &cLifesteal is disabled. (Lifesteal)" to player			
+  trigger:
+    if {Lifesteal} is "Enabled":
+      if args 1 is not set:
+        send "&7[ %{ServerName}% &7] You have &c%player's max health% &7Hearts." to player
+      if args 1 is set:
+        send "&7[ %{ServerName}% &7] %target% has &c%target's max health% &7Hearts." to player
+    if {Lifesteal} is "Disabled":
+      send "&7[ &4Exception Occurred &7] &cLifesteal is disabled. (Lifesteal)" to player			
 
 on respawn:
-	if {Status.%player%} is "GhostFlightInvisiblity":
-		wait 5 ticks
-		apply invisibility 1 without particles to player for 1 hour
-		set player's gamemode to adventure
-		set player's flight mode to true
+  if {Status.%player%} is "GhostFlightInvisiblity":
+    wait 5 ticks
+    apply invisibility 1 without particles to player for 1 hour
+    set player's gamemode to adventure
+    set player's flight mode to true
