@@ -1,0 +1,26 @@
+command /ConfigReloadLs:
+  permission: Lifesteal.Admin.*
+  permission message: &7[ %set {ServerName}% &7] You do not have permissions for that command. (Lifesteal)
+  aliases: ConfigReload, LsReload
+  trigger:
+  #Config Settings
+    set {CombatTimer} to 5
+    set {CombatTimer.%player%} to 0
+    set {Ghosts} to "Enabled"
+    set {Resurrection} to "Disabled"
+    set {GhostMode} to "FlightInvisiblity"
+    set {Status.%player%} to "Alive"
+    set {Lifesteal} to "Disabled"
+    set {Lifesteal.Hearts} to 1
+    set {MaxHearts} to "Disabled"
+    set {Lifesteal.MaxHearts} to 10
+    set {TestingThing} to "Disabled"
+    set {LeavePenalty} to "Termination"
+  #Default Gui Settings
+    set {Item.HeartDecrease} to red dye
+    set {Item.Heart} to redstone block
+    set {Item.HeartIncrease} to red dye
+    set {Item.CombatTimerIncrease} to orange dye
+    set {Item.CombatTimerDecrease} to orange dye
+    set {Item.MaxHeartsIncrease} to light blue dye
+    set {Item.MaxHeartsDecrease} to light blue dye
