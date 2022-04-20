@@ -11,6 +11,8 @@
 # 5. For support message Almondz#9877 anymore on discord
 # 6. Use /TestingGui for more commands and testing features.
 #--------------------------------------------------------------------
+#Credits:
+#Aubrey, Almond, And Ern
 
 Variables:
   {CombatTimer} = 5
