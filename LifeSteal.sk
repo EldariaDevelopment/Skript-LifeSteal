@@ -25,6 +25,7 @@ Variables:
   {Lifesteal.MaxHearts} = 10
   {TestingThing} = "Disabled"
   {LeavePenalty} = "Termination"
+#Default Gui Settings
   {Item.HeartDecrease} = red dye
   {Item.Heart} = redstone block
   {Item.HeartIncrease} = red dye
