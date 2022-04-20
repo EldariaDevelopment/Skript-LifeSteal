@@ -1,6 +1,5 @@
 # Requirements #
-* Skript[^1]
-* Skript 2.6+
+* Skript 2.6+[^1]
 # Not Tested but could be needed:
 * SkRayFall
 * SkQuery
