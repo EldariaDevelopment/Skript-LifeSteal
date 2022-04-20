@@ -3,7 +3,7 @@ command /ConfigReloadLs:
   permission message: &7[ %set {ServerName}% &7] You do not have permissions for that command. (Lifesteal)
   aliases: ConfigReload, LsReload
   trigger:
-  #Config Settings
+#Config Settings
     set {CombatTimer} to 5
     set {CombatTimer.%player%} to 0
     set {Ghosts} to "Enabled"
@@ -16,7 +16,7 @@ command /ConfigReloadLs:
     set {Lifesteal.MaxHearts} to 10
     set {TestingThing} to "Disabled"
     set {LeavePenalty} to "Termination"
-  #Default Gui Settings
+#Default Gui Settings
     set {Item.HeartDecrease} to red dye
     set {Item.Heart} to redstone block
     set {Item.HeartIncrease} to red dye
