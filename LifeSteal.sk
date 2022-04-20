@@ -25,6 +25,13 @@ Variables:
   {Lifesteal.MaxHearts} = 10
   {TestingThing} = "Disabled"
   {LeavePenalty} = "Termination"
+  {Item.HeartDecrease} = red dye
+  {Item.Heart} = redstone block
+  {Item.HeartIncrease} = red dye
+  {Item.CombatTimerIncrease} = orange dye
+  {Item.CombatTimerDecrease} = orange dye
+  {Item.MaxHeartsIncrease} = light blue dye
+  {Item.MaxHeartsDecrease} = light blue dye
 command /dctimer [<text>] [<text>]:
   trigger:
     if player has permission "Admin":
@@ -57,42 +64,56 @@ command /TestingGui [<text>]:
   aliases: TestGui, gui, tg
   trigger:
     if args 1 is not set:
-      open chest with 1 rows named "&0[ Testing Gui ]" to player
-      format slot 0 of player with {Item.Heart} named "&cHeart" with lore "&7> Click to get a heart." to run [make player execute command "/TestingGui Heart"]
-      format slot 1 of player with a black glass pane named " " to be unstealable
+      set metadata tag "testinggui" of player to chest inventory with 1 row named "&0[ Testing Gui ]"
+      set {_count} to 0
+      loop 9 times:
+        set slot {_count} of metadata tag "testinggui" of player to black glass pane named "&7"
+        add 1 to {_count}
+      #format slot 0 of player with {Item.Heart} named "&cHeart" with lore "&7> Click to get a heart." to run [make player execute command "/TestingGui Heart"]
+      set slot 0 of metadata tag "testinggui" of player to {Item.Heart} named "&cHeart" with lore "&7> Click to get a heart."
       if {Ghosts} is "Enabled":
-        format slot 2 of player with a skeleton skull named "&7Ghosts: Currently &aEnabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This &ais &7a recommended setting. ", "&7> Click to &cDisable." to run [make player execute command "/TestingGui GhostsOff"]
+        #format slot 2 of player with a skeleton skull named "&7Ghosts: Currently &aEnabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This &ais &7a recommended setting. ", "&7> Click to &cDisable." to run [make player execute command "/TestingGui GhostsOff"]
+        set slot 2 of metadata tag "testinggui" of player to skeleton skull named "&7Ghosts: Currently &aEnabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This &ais &7a recommended setting. ", "&7> Click to &cDisable."
       if {Ghosts} is "Disabled":
-        format slot 2 of player with a skeleton skull named "&7Ghosts: Currently &cDisabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable." to run [make player execute command "/TestingGui GhostsOn"]
+        #format slot 2 of player with a skeleton skull named "&7Ghosts: Currently &cDisabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable." to run [make player execute command "/TestingGui GhostsOn"]
+        set slot 2 of metadata tag "testinggui" of player to skeleton skull named "&7Ghosts: Currently &cDisabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable."
       if {GhostMode} is "Spectator":
-        format slot 3 of player with a wither skeleton skull named "&7Ghost Mode: &fSpectator&7." with lore "&7> When a player dies they will be put", "&7Into spectator gamemode.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to change to &fFlight + Invisibility&7." to run [make player execute command "/TestingGui GhostModeFlightInvisiblity"]
+        #format slot 3 of player with a wither skeleton skull named "&7Ghost Mode: &fSpectator&7." with lore "&7> When a player dies they will be put", "&7Into spectator gamemode.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to change to &fFlight + Invisibility&7." to run [make player execute command "/TestingGui GhostModeFlightInvisiblity"]
+        set slot 3 of metadata tag "testinggui" of player to wither skeleton skull named "&7Ghost Mode: &fSpectator&7." with lore "&7> When a player dies they will be put", "&7Into spectator gamemode.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to change to &fFlight + Invisibility&7."
       if {GhostMode} is "FlightInvisiblity":
-        format slot 3 of player with a wither skeleton skull named "&7Ghost Mode: &fFlight + Invisibility&7." with lore "&7> When a player dies they will turn", "&7Invisibile and be given flight.", "&7> This &ais &7a recommended setting. ", "&7> Click to change to &fSpectator&7." to run [make player execute command "/TestingGui GhostModeSpectator"]
-      format slot 4 of player with a bone named "&fDie" with lore "&7> You Die. If Ghosts are enabled you", "&7Will become one and your health", "&7Will be set to 0." to run [make player execute command "/TestingGui Die"]
-      format slot 5 of player with a black glass pane named " " to be unstealable
+        #format slot 3 of player with a wither skeleton skull named "&7Ghost Mode: &fFlight + Invisibility&7." with lore "&7> When a player dies they will turn", "&7Invisibile and be given flight.", "&7> This &ais &7a recommended setting. ", "&7> Click to change to &fSpectator&7." to run [make player execute command "/TestingGui GhostModeSpectator"]
+        set slot 3 of metadata tag "testinggui" of player to wither skeleton skull named "&7Ghost Mode: &fFlight + Invisibility&7." with lore "&7> When a player dies they will turn", "&7Invisibile and be given flight.", "&7> This &ais &7a recommended setting. ", "&7> Click to change to &fSpectator&7."
+     #format slot 4 of player with a bone named "&fDie" with lore "&7> You Die. If Ghosts are enabled you", "&7Will become one and your health", "&7Will be set to 0." to run [make player execute command "/TestingGui Die"]
+      set slot 4 of metadata tag "testinggui" of player to bone named "&fDie" with lore "&7> You Die. If Ghosts are enabled you", "&7Will become one and your health", "&7Will be set to 0."
       if {Resurrection} is "Enabled":
-        format slot 6 of player with a totem of undying named "&7Resurrection: Currently &aEnabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This &ais &7a recommended setting. ", "&7> Click to &cDisable." to run [make player execute command "/TestingGui ResurrectionOff"]
+        #format slot 6 of player with a totem of undying named "&7Resurrection: Currently &aEnabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This &ais &7a recommended setting. ", "&7> Click to &cDisable." to run [make player execute command "/TestingGui ResurrectionOff"]
+        set slot 6 of metadata tag "testinggui" of player to totem of undying named "&7Resurrection: Currently &aEnabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This &ais &7a recommended setting. ", "&7> Click to &cDisable."
       if {Resurrection} is "Disabled":
-        format slot 6 of player with a totem of undying named "&7Resurrection: Currently &cDisabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable." to run [make player execute command "/TestingGui ResurrectionOn"]
-      format slot 7 of player with a nether star named "&fRevive" to run [make player execute command "/TestingGui Revive"]
-      format slot 8 of player with a black glass pane named " " to be unstealable
+        #format slot 6 of player with a totem of undying named "&7Resurrection: Currently &cDisabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable." to run [make player execute command "/TestingGui ResurrectionOn"]
+        set slot 6 of metadata tag "testinggui" of player to totem of undying named "&7Resurrection: Currently &cDisabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable."
+      #format slot 7 of player with a nether star named "&fRevive" to run [make player execute command "/TestingGui Revive"]
+      set slot 7 of metadata tag "testinggui" of player to nether star named "&fRevive"
     if args 1 is "Heart":
       send "&7[ %{ServerName}% &7] Gave &cHeart &7to player. (Testing)" to player
       give {Item.Heart} named "&cHeart" with lore "&7> Right-Click to increase your health by 0.5." to player
     if args 1 is "GhostsOff":
-      format slot 2 of player with a skeleton skull named "&7Ghosts: Currently &cDisabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable." to run [make player execute command "/Lifesteal GhostsOn"]
+      #format slot 2 of player with a skeleton skull named "&7Ghosts: Currently &cDisabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable." to run [make player execute command "/Lifesteal GhostsOn"]
+      set slot 2 of metadata tag "testinggui" of player to skeleton skull named "&7Ghosts: Currently &cDisabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable."
       send "&7[ %{ServerName}% &7] Ghosts &cDisabled&7. (Testing)" to player
       set {Ghosts} to "Disabled"
     if args 1 is "GhostsOn":
-      format slot 2 of player with a skeleton skull named "&7Ghosts: Currently &aEnabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This &ais &7a recommended setting. ", "&7> Click to &cDisable." to run [make player execute command "/Lifesteal GhostsOff"]
+      #format slot 2 of player with a skeleton skull named "&7Ghosts: Currently &aEnabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This &ais &7a recommended setting. ", "&7> Click to &cDisable." to run [make player execute command "/Lifesteal GhostsOff"]
+      set slot 2 of metadata tag "testinggui" of player to skeleton skull named "&7Ghosts: Currently &aEnabled&7." with lore "&7> When a player runs out of hearts,", "&7They become a ghost.", "&7> Disabling this means player's will", "&7Never go below 0.5 Hearts.", "&7> This &ais &7a recommended setting. ", "&7> Click to &cDisable."
       send "&7[ %{ServerName}% &7] Ghosts &aEnabled&7. (Testing)" to player
       set {Ghosts} to "Enabled"
     if args 1 is "GhostModeFlightInvisiblity":
-      format slot 3 of player with a wither skeleton skull named "&7Ghost Mode: &fFlight + Invisibility&7." with lore "&7> When a player dies they will turn", "&7Invisibile and be given flight.", "&7> This &ais &7a recommended setting. ", "&7> Click to change to &fSpectator&7." to run [make player execute command "/TestingGui GhostModeSpectator"]
+      #format slot 3 of player with a wither skeleton skull named "&7Ghost Mode: &fFlight + Invisibility&7." with lore "&7> When a player dies they will turn", "&7Invisibile and be given flight.", "&7> This &ais &7a recommended setting. ", "&7> Click to change to &fSpectator&7." to run [make player execute command "/TestingGui GhostModeSpectator"]
+      set slot 3 of metadata tag "testinggui" of player to wither skeleton skull named "&7Ghost Mode: &fFlight + Invisibility&7." with lore "&7> When a player dies they will turn", "&7Invisibile and be given flight.", "&7> This &ais &7a recommended setting. ", "&7> Click to change to &fSpectator&7."
       send "&7[ %{ServerName}% &7] Ghost mode set to &fFlight + Invisiblity&7. (Testing)" to player
       set {GhostMode} to "FlightInvisiblity"
     if args 1 is "GhostModeSpectator":
-      format slot 3 of player with a wither skeleton skull named "&7Ghost Mode: &fSpectator&7." with lore "&7> When a player dies they will be put", "&7Into spectator gamemode.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to change to &fFlight + Invisibility&7." to run [make player execute command "/TestingGui GhostModeFlightInvisiblity"]
+      #format slot 3 of player with a wither skeleton skull named "&7Ghost Mode: &fSpectator&7." with lore "&7> When a player dies they will be put", "&7Into spectator gamemode.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to change to &fFlight + Invisibility&7." to run [make player execute command "/TestingGui GhostModeFlightInvisiblity"]
+      set slot 3 of metadata tag "testinggui" of player to wither skeleton skull named "&7Ghost Mode: &fSpectator&7." with lore "&7> When a player dies they will be put", "&7Into spectator gamemode.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to change to &fFlight + Invisibility&7."
       send "&7[ %{ServerName}% &7] Ghost mode set to &fSpectator&7. (Testing)" to player
       set {GhostMode} to "Spectator"
     if args 1 is "Die":
@@ -112,11 +133,13 @@ command /TestingGui [<text>]:
           set player's flight mode to true
           set {Status.%player%} to "GhostFlightInvisiblity"
     if args 1 is "ResurrectionOff":
-      format slot 6 of player with a totem of undying named "&7Resurrection: Currently &cDisabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This &ais &7a recommended setting. ", "&7> Click to &aEnable." to run [make player execute command "/TestingGui ResurrectionOn"]
+      #format slot 6 of player with a totem of undying named "&7Resurrection: Currently &cDisabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This &ais &7a recommended setting. ", "&7> Click to &aEnable." to run [make player execute command "/TestingGui ResurrectionOn"]
+      set slot 6 of metadata tag "testinggui" of player to totem of undying named "&7Resurrection: Currently &cDisabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &aEnable."
       send "&7[ %{ServerName}% &7] Resurrection &cDisabled&7. (Testing)" to player
       set {Resurrection} to "Disabled"
     if args 1 is "ResurrectionOn":
-      format slot 6 of player with a totem of undying named "&7Resurrection: Currently &aEnabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &cDisable." to run [make player execute command "/TestingGui ResurrectionOff"]
+      #format slot 6 of player with a totem of undying named "&7Resurrection: Currently &aEnabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This is &cNOT &7a recommended setting use at your own risk.", "&7> Click to &cDisable." to run [make player execute command "/TestingGui ResurrectionOff"]
+      set slot 6 of metadata tag "testinggui" of player to totem of undying named "&7Resurrection: Currently &aEnabled&7." with lore "&7> Allows player's to revive each other", "&7For the cost of 1 Heart.", "&7> Revived player's come back with 1 Heart.", "&7> This &ais &7a recommended setting. ", "&7> Click to &cDisable."
       send "&7[ %{ServerName}% &7] Resurrection &aEnabled&7. (Testing)" to player
       set {Resurrection} to "Enabled"
     if args 1 is "Revive":
@@ -136,6 +159,8 @@ command /TestingGui [<text>]:
           set {Status.%player%} to "Alive"
         if {GhostMode} is "Alive":
           send "&7[ &4Exception Occurred &7] &cYou are not dead. (Testing)" to player
+    open (metadata tag "testinggui" of player) to player
+
 
 #--------------------------------------------------------------------
 #                              Administrative                                                         
@@ -539,7 +564,7 @@ command /hearts [<player>]:
       if args 1 is not set:
         send "&7[ %{ServerName}% &7] You have &c%player's max health% &7Hearts." to player
       if args 1 is set:
-        send "&7[ %{ServerName}% &7] %target% has &c%target's max health% &7Hearts." to player
+        send "&7[ %{ServerName}% &7] %arg-1% has &c%arg-1's max health% &7Hearts." to player
     if {Lifesteal} is "Disabled":
       send "&7[ &4Exception Occurred &7] &cLifesteal is disabled. (Lifesteal)" to player			
 
@@ -549,3 +574,28 @@ on respawn:
     apply invisibility 1 without particles to player for 1 hour
     set player's gamemode to adventure
     set player's flight mode to true
+
+on inventory click:
+  if event-inventory is (metadata tag "testinggui" of player):
+    cancel event
+    if event-slot is 2:
+      if {Ghosts} is "enabled":
+        execute player command "/testinggui ghostsoff"
+      else:
+        execute player command "/testinggui ghostson"
+    if event-slot is 0:
+      execute player command "/testinggui heart"
+    if event-slot is 3:
+      if {GhostMode} is "Spectator":
+        execute player command "/testinggui GhostModeFlightInvisiblity"
+      else:
+        execute player command "/testinggui GhostModeSpectator"
+    if event-slot is 4:
+      execute player command "/testinggui die"
+    if event-slot is 6:
+      if {Resurrection} is "Disabled":
+        execute player command "/testinggui resurrectionon"
+      else:
+        execute player command "/testinggui resurrectionoff"
+    if event-slot is 7:
+      execute player command "/testinggui revive"
