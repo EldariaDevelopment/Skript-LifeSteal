@@ -22,6 +22,7 @@ Installing is simple and and customizing the features and the code is simple
 - [x] LifeSteal
 - [x] Combat Timer
 - [x] Customizability
+
 ---
 ## Licenses 
 You may not use any proprietary code without doing the following:
