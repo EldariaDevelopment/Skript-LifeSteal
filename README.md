@@ -1,8 +1,19 @@
 
-For more information head to the [Wiki](https://github.com/EldariaDevelopment/Skript-LifeSteal/wiki)
+For more information head to the [Wiki](https://github.com/EldariaDevelopment/Skript- LifeSteal/wiki)
 ## Introduction
 
 A LifeSteal Plugin using Skript. Currently on Version 3.0  
+
+## Why Skript?  
+**Because Skript is extremely easy to customize and easily readable.**  
+**Installing is simple and and customizing the features and the code is simple**
+
+## Features
+
+- [x] LifeSteal
+- [x] Combat Timer
+- [x] Customizability 
+
 
 ## Licenses 
 You may not use any proprietary code without doing the following:
@@ -11,8 +22,8 @@ You may not use any proprietary code without doing the following:
 * Crediting me, Almond (Almonddrop11) and any other contributors to this
 * Contacting me, about using my program at EldariaDevelopment@gmail.com
 
-## Licenses - Extended
+## Licenses -  Extended
 
-* License 1: AGPL-3.0
-* License 2: Apache-2.0 
-* License 3: GPL-3.0 
+* License 1: AGPL- 3.0
+* License 2: Apache- 2.0
+* License 3: GPL- 3.0
