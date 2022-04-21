@@ -13,6 +13,6 @@ You may not use any proprietary code without doing the following:
 
 ## Licenses - Extended
 
-* License 1: AGPL-3.0
-* License 2: Apache-2.0 
-* License 3: GPL-3.0 
+* Primary License: AGPL-3.0
+* Secondary License: Apache-2.0 
+* Tertiary License: GPL-3.0 
