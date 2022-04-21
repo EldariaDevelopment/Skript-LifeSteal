@@ -1,4 +1,4 @@
-<title>eeee</title>
+
 ## A LifeSteal Plugin with Skript uwu
 For more information head to the [Wiki](https://github.com/EldariaDevelopment/Skript-LifeSteal/wiki)
 
