@@ -1,5 +1,5 @@
 
-For more information head to the [Wiki](https://github.com/EldariaDevelopment/Skript- LifeSteal/wiki)
+For more information head to the [Wiki](https://github.com/EldariaDevelopment/Skript-LifeSteal/wiki)
 ## Introduction
 
 A LifeSteal Plugin using Skript. Currently on Version 3.0  
