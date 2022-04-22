@@ -1,5 +1,6 @@
 <p>
-For more information head to the <a href="https://github.com/EldariaDevelopment/Skript-LifeSteal/wiki" target="_blank">Wiki</a>
+For more information head to the <a href="https://github.com/EldariaDevelopment/Skript-LifeSteal/wiki" target="_blank">Wiki</a> <br>
+Website Version 23
 </p>
 <h2>
 Introduction
