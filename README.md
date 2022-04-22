@@ -2,15 +2,12 @@
 For more information head to the [Wiki](https://github.com/EldariaDevelopment/Skript-LifeSteal/wiki)
 ## Introduction
 
-A LifeSteal Plugin using Skript. Currently on Version 3.0 
-<a href="Skript-LifeSteal-main (4).zip" download>
-  <img src="Skript-LifeSteal-main (4).zipg" alt="e">
-</a>
+A LifeSteal Plugin using Skript. Currently on Version 3.0 <a href="https://github.com/EldariaDevelopment/Skript-LifeSteal/raw/gh-pages/Skript-LifeSteal-main%20(4).zip" target="_blank">Download</a>
+
 ---
 ## Why Skript?
 Because Skript is extremely easy to customize and easily readable.  
 Installing is simple and and customizing the features and the code is simple
-
 ---
 ## Versions
 * <a href="https://github.com/EldariaDevelopment/Skript-LifeSteal/releases/tag/V3.0_1.18" target="_blank">V3.0</a>
