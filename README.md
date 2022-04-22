@@ -44,14 +44,19 @@ You may not use any proprietary code without doing the following:
   <li>Crediting me, Almond (Almonddrop11) and any other contributors to this
   <li>Contacting me, about using my program at EldariaDevelopment@gmail.com
 </ul>
----
-## Licenses - Extended
-* Primary License: AGPL-3.0
-* Secondary License: Apache-2.0 
-* Tertiary License: GPL-3.0 
-
----
-## Credits
-* Almond: Deeveloper
-* Aubrey: Developer
-* Ern: Developer
+<h2>
+Licenses - Extended
+</h2>
+<ul>
+  <li>Primary License: AGPL-3.0
+  <li>Secondary License: Apache-2.0 
+  <li>Tertiary License: GPL-3.0 
+</ul>
+<h2>
+Credits
+</h2>
+<ul>
+  <li>Almond: Deeveloper
+  <li>Aubrey: Developer
+  <li>Ern: Developer
+</ul>
