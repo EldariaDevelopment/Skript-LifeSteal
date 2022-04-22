@@ -3,7 +3,9 @@ For more information head to the [Wiki](https://github.com/EldariaDevelopment/Sk
 ## Introduction
 
 A LifeSteal Plugin using Skript. Currently on Version 3.0 
-
+<a href="/images/myw3schoolsimage.jpg" download>
+  <img src="/images/myw3schoolsimage.jpg" alt="W3Schools">
+</a>
 ---
 ## Why Skript?
 Because Skript is extremely easy to customize and easily readable.  
