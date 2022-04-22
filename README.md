@@ -17,6 +17,7 @@ Installing is simple and and customizing the features and the code is simple
 * [V2.8.1](https://github.com/EldariaDevelopment/Skript-LifeSteal/releases/tag/V2.8.1_1.18_(Development))
 * [V2.8](https://github.com/EldariaDevelopment/Skript-LifeSteal/releases/tag/V2.8_%7C_1.18_(Development))
 * [2.7](https://github.com/EldariaDevelopment/Skript-LifeSteal/releases/tag/Skript)
+
 ---
 ## Features
 - [x] LifeSteal
