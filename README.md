@@ -11,12 +11,12 @@ Installing is simple and and customizing the features and the code is simple
 
 ---
 ## Versions
-* <a href="(https://github.com/EldariaDevelopment/Skript-LifeSteal/releases/tag/V3.0_1.18)" target="_blank">V3.0</a>
-* <a href="(https://github.com/EldariaDevelopment/Skript-LifeSteal/releases/tag/V2.9_1.18)" target="_blank">V2.9</a>
-* <a href="(https://github.com/EldariaDevelopment/Skript-LifeSteal/releases/tag/V2.8.2_1.18_(Development))" target="_blank">V2.8.2</a>
-* <a href="(https://github.com/EldariaDevelopment/Skript-LifeSteal/releases/tag/V2.8.1_1.18_(Development))" target="_blank">V2.8.1</a>
-* <a href="(https://github.com/EldariaDevelopment/Skript-LifeSteal/releases/tag/V2.8_%7C_1.18_(Development))" target="_blank">V2.8</a>
-* <a href="(https://github.com/EldariaDevelopment/Skript-LifeSteal/releases/tag/Skript)" target="_blank">V2.7</a>
+* <a href="https://github.com/EldariaDevelopment/Skript-LifeSteal/releases/tag/V3.0_1.18" target="_blank">V3.0</a>
+* <a href="https://github.com/EldariaDevelopment/Skript-LifeSteal/releases/tag/V2.9_1.18" target="_blank">V2.9</a>
+* <a href="https://github.com/EldariaDevelopment/Skript-LifeSteal/releases/tag/V2.8.2_1.18_(Development)" target="_blank">V2.8.2</a>
+* <a href="https://github.com/EldariaDevelopment/Skript-LifeSteal/releases/tag/V2.8.1_1.18_(Development)" target="_blank">V2.8.1</a>
+* <a href="https://github.com/EldariaDevelopment/Skript-LifeSteal/releases/tag/V2.8_%7C_1.18_(Development)" target="_blank">V2.8</a>
+* <a href="https://github.com/EldariaDevelopment/Skript-LifeSteal/releases/tag/Skript" target="_blank">V2.7</a>
 
 ---
 ## Features
