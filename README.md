@@ -43,7 +43,6 @@ You may not use any proprietary code without doing the following:
   <li>Open sourcing the software, whether public or private. You must open source using the GPLv3 license
   <li>Crediting me, Almond (Almonddrop11) and any other contributors to this
   <li>Contacting me, about using my program at EldariaDevelopment@gmail.com
-</ul>
 <h2>
 Licenses - Extended
 </h2>
@@ -51,6 +50,7 @@ Licenses - Extended
   <li>Primary License: AGPL-3.0
   <li>Secondary License: Apache-2.0 
   <li>Tertiary License: GPL-3.0 
+</ul>
 </ul>
 <h2>
 Credits
