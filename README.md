@@ -37,3 +37,7 @@ You may not use any proprietary code without doing the following:
 * Tertiary License: GPL-3.0 
 
 ---
+## Credits
+* Almond: Deeveloper
+* Aubrey: Developer
+* Ern: Developer
